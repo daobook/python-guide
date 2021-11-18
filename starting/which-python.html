@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Picking a Python Interpreter (3 vs 2) &#8212; The Hitchhiker&#39;s Guide to Python</title>
+    <title>挑选一个 Python 解释器（3 vs 2） &#8212; The Hitchhiker&#39;s Guide to Python</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -16,7 +16,7 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="Properly Installing Python" href="installation.html" />
+    <link rel="next" title="正确安装 Python" href="installation.html" />
     <link rel="prev" title="Python 搭车指南！" href="../index.html" />
   
 
@@ -42,7 +42,7 @@
   <meta name="twitter:card" content="summary">
   <meta property="twitter:image" content="https://docs.python-guide.org/_static/social-card.jpg">
   <meta property="og:image" content="https://docs.python-guide.org/_static/social-card.jpg">
-  <meta property="og:title" content="Picking a Python Interpreter (3 vs 2) &#8212; The Hitchhiker&#39;s Guide to Python">
+  <meta property="og:title" content="挑选一个 Python 解释器（3 vs 2） &#8212; The Hitchhiker&#39;s Guide to Python">
   <meta property="og:type" content="article">
   
   <meta property="og:description" content="">
@@ -80,112 +80,72 @@
             </div>
             
   <div class="section" id="picking-a-python-interpreter-3-vs-2">
-<h1>Picking a Python Interpreter (3 vs 2)<a class="headerlink" href="#picking-a-python-interpreter-3-vs-2" title="永久链接至标题">¶</a></h1>
+<h1>挑选一个 Python 解释器（3 vs 2）<a class="headerlink" href="#picking-a-python-interpreter-3-vs-2" title="永久链接至标题">¶</a></h1>
 <img alt="../_images/34484834733_5b80f65ab1_k_d.jpg" src="../_images/34484834733_5b80f65ab1_k_d.jpg" />
 <div class="section" id="the-state-of-python-3-2">
-<span id="which-python"></span><h2>The State of Python (3 &amp; 2)<a class="headerlink" href="#the-state-of-python-3-2" title="永久链接至标题">¶</a></h2>
-<p>When choosing a Python interpreter, one looming question is always present:
-“Should I choose Python 2 or Python 3”? The answer is a bit more subtle than
-one might think.</p>
-<p>The basic gist of the state of things is as follows:</p>
+<span id="which-python"></span><h2>Python 的现状（3 &amp; 2）<a class="headerlink" href="#the-state-of-python-3-2" title="永久链接至标题">¶</a></h2>
+<p>当选择 Python 解释器时，一个迫在眉睫的问题始终存在：”我应该选择 Python 2 还是 Python 3？” 。答案比人们想象的要微妙一些。</p>
+<p>事情的基本要点如下：</p>
 <ol class="arabic simple">
-<li>Most production applications today use Python 3.</li>
-<li>Python 3 is ready for the production deployment of applications today.</li>
-<li>Python 2 reached the end of its life on January 1, 2020 <a class="footnote-reference" href="#pep373-eol" id="id1">[6]</a>.</li>
-<li>The brand name “Python” encapsulates both Python 3 and Python 2.</li>
+<li>今天，大多数生产型应用都使用 Python 3。</li>
+<li>今天，Python 3 已经准备好用于应用程序的生产部署。</li>
+<li>Python 2 在 2020 年 1 月 1 日达到其生命的终点 <a class="footnote-reference" href="#pep373-eol" id="id1">[6]</a>。</li>
+<li>品牌名称 “Python” 同时囊括了 Python 3 和 Python 2。</li>
 </ol>
 </div>
 <div class="section" id="recommendations">
-<h2>Recommendations<a class="headerlink" href="#recommendations" title="永久链接至标题">¶</a></h2>
+<h2>建议<a class="headerlink" href="#recommendations" title="永久链接至标题">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
-<p class="last">The use of <strong>Python 3</strong> is <em>highly</em> recommended over Python 2. Consider upgrading your applications and infrastructure if you find yourself <em>still</em> using Python 2 in production today. If you are using Python 3, congratulations —&nbsp;you are indeed a person of excellent taste.
-—<em>Kenneth Reitz</em></p>
+<p class="last">强烈建议使用 <strong>Python 3</strong>，而不是 Python 2。如果你发现自己今天仍在生产中使用 Python 2，请考虑升级你的应用程序和基础设施。如果你正在使用 Python 3，那么恭喜你 – 你确实是一个有品位的人。– <em>Kenneth Reitz</em></p>
 </div>
-<p>I’ll be blunt:</p>
+<p>那我直言不讳：</p>
 <ul class="simple">
-<li>Use Python 3 for new Python applications.</li>
-<li>If you’re learning Python for the first time, familiarizing yourself with Python 2.7 will be very
-useful, but not more useful than learning Python 3.</li>
-<li>Learn both. They are both “Python”.</li>
+<li>在新的 Python 应用程序中使用 Python 3。</li>
+<li>如果你是第一次学习 Python，熟悉 Python 2.7 将非常有用，但不会比学习 Python 3 更有用。</li>
+<li>两者都要学习。它们都是 “Python”。</li>
 </ul>
 </div>
 <div class="section" id="so-3">
-<h2>So…. 3?<a class="headerlink" href="#so-3" title="永久链接至标题">¶</a></h2>
-<p>If you’re choosing a Python interpreter to use, I
-recommend you use the newest Python 3.x, since every version brings new and
-improved standard library modules, security and bug fixes.</p>
-<p>Given such, only use Python 2 if you have a strong reason to, such as a
-pre-existing code-base, a Python 2 exclusive library, simplicity/familiarity,
-or, of course, you absolutely love and are inspired by Python 2. No harm in that.</p>
-<p><a class="reference external" href="http://wiki.python.org/moin/Python2orPython3">Further Reading</a></p>
-<p>It is possible to <a class="reference external" href="https://docs.python.org/3/howto/pyporting.html">write code that works on Python 2.6, 2.7, and Python 3</a>. This
-ranges from trivial to hard depending upon the kind of software
-you are writing; if you’re a beginner there are far more important things to
-worry about.</p>
+<h2>所以…. 3？<a class="headerlink" href="#so-3" title="永久链接至标题">¶</a></h2>
+<p>如果你选择使用 Python 解释器，我建议你使用最新的 Python 3.x，因为每个版本都会带来新的和改进的标准库模块、安全和错误修复。</p>
+<p>鉴于此，只有在你有充分理由的情况下才使用 Python 2，例如预先存在的代码库、Python 2 专用库、简单性/熟悉性，或者，当然，你绝对喜欢 Python 2 并受到其启发。这样做没有坏处。</p>
+<p><a class="reference external" href="http://wiki.python.org/moin/Python2orPython3">延伸阅读</a></p>
+<p>有可能 <a class="reference external" href="https://docs.python.org/3/howto/pyporting.html">写出能在 Python 2.6、2.7 和 Python 3 上运行的代码</a>。这取决于你所写的软件的种类，从微不足道到困难重重；如果你是一个初学者，有更重要的事情需要担心。</p>
 </div>
 <div class="section" id="implementations">
-<h2>Implementations<a class="headerlink" href="#implementations" title="永久链接至标题">¶</a></h2>
-<p>When people speak of <em>Python</em> they often mean not just the language but also
-the CPython implementation. <em>Python</em> is actually a specification for a language
-that can be implemented in many different ways.</p>
+<h2>实施方案<a class="headerlink" href="#implementations" title="永久链接至标题">¶</a></h2>
+<p>当人们谈到 <em>Python</em> 时，他们往往不仅仅是指语言，还包括 CPython 的实现。<em>Python</em> 实际上是一种语言的规范，可以用许多不同的方式来实现。</p>
 <div class="section" id="cpython">
 <h3>CPython<a class="headerlink" href="#cpython" title="永久链接至标题">¶</a></h3>
-<p><a class="reference external" href="http://www.python.org">CPython</a> is the reference implementation of Python,
-written in C. It compiles Python code to intermediate bytecode which is then
-interpreted by a virtual machine. CPython provides the highest
-level of compatibility with Python packages and C extension modules.</p>
-<p>If you are writing open source Python code and want to reach the widest possible
-audience, targeting CPython is best. To use packages which rely on C extensions
-to function, CPython is your only implementation option.</p>
-<p>All versions of the Python language are implemented in C because CPython is the
-reference implementation.</p>
+<p><a class="reference external" href="http://www.python.org">CPython</a> 是用 C 语言编写的 Python 参考实现。它将 Python 代码编译成中间字节码，然后由虚拟机解释。CPython 提供了与 Python 包和 C 扩展模块的最高级别的兼容性。</p>
+<p>如果你正在编写开源的 Python 代码，并希望达到最广泛的受众，以 CPython 为目标是最好的。要使用依赖 C 语言扩展功能的包，CPython 是你唯一的实现选择。</p>
+<p>Python 语言的所有版本都用 C 语言实现，因为 CPython 是参考实现。</p>
 </div>
 <div class="section" id="pypy">
 <h3>PyPy<a class="headerlink" href="#pypy" title="永久链接至标题">¶</a></h3>
-<p><a class="reference external" href="http://pypy.org/">PyPy</a> is a Python interpreter implemented in a restricted
-statically-typed subset of the Python language called RPython. The interpreter
-features a just-in-time compiler and supports multiple back-ends (C, CLI, JVM).</p>
-<p>PyPy aims for maximum compatibility with the reference CPython implementation
-while improving performance.</p>
-<p>If you are looking to increase performance of your Python code, it’s
-worth giving PyPy a try. On a suite of benchmarks, it’s currently <a class="reference external" href="http://speed.pypy.org/">over 5 times
-faster than CPython</a>.</p>
-<p>PyPy supports Python 2.7. PyPy3 <a class="footnote-reference" href="#pypy-ver" id="id4">[1]</a>, released in beta, targets Python 3.</p>
+<p><a class="reference external" href="http://pypy.org/">PyPy</a> 是一个 Python 解释器，用 Python 语言的限制性静态类型子集实现，称为 RPython。该解释器具有即时编译器的特点，并支持多种后端（C、CLI、JVM）。</p>
+<p>PyPy 旨在与参考的 CPython 实现最大限度地兼容，同时提高性能。</p>
+<p>如果你想提高你的 Python 代码的性能，值得尝试 PyPy。在一套基准测试中，它目前比 <a class="reference external" href="http://speed.pypy.org/">CPython 快 5 倍以上</a>。</p>
+<p>PyPy 支持 Python 2.7。PyPy3 <a class="footnote-reference" href="#pypy-ver" id="id4">[1]</a>，在测试版中发布，针对 Python 3。</p>
 </div>
 <div class="section" id="jython">
 <h3>Jython<a class="headerlink" href="#jython" title="永久链接至标题">¶</a></h3>
-<p><a class="reference external" href="http://www.jython.org/">Jython</a> is a Python implementation that compiles
-Python code to Java bytecode which is then executed by the JVM (Java Virtual Machine).
-Additionally, it is able to import and use any Java class like a Python
-module.</p>
-<p>If you need to interface with an existing Java codebase or have other reasons to
-need to write Python code for the JVM, Jython is the best choice.</p>
-<p>Jython currently supports up to Python 2.7. <a class="footnote-reference" href="#jython-ver" id="id6">[2]</a></p>
+<p><a class="reference external" href="http://www.jython.org/">Jython</a> 是一个 Python 实现，它将 Python 代码编译成 Java 字节码，然后由 JVM（Java 虚拟机）执行。此外，它能够像 Python 模块一样导入和使用任何 Java 类。</p>
+<p>如果你需要与现有的 Java 代码库对接，或者有其他原因需要为 JVM 编写 Python 代码，Jython 是最好的选择。</p>
+<p>Jython 目前最多支持 Python 2.7。<a class="footnote-reference" href="#jython-ver" id="id6">[2]</a></p>
 </div>
 <div class="section" id="ironpython">
 <h3>IronPython<a class="headerlink" href="#ironpython" title="永久链接至标题">¶</a></h3>
-<p><a class="reference external" href="http://ironpython.net/">IronPython</a>  is an implementation of Python for the .NET
-framework. It can use both Python and .NET framework libraries, and can also
-expose Python code to other languages in the .NET framework.</p>
-<p><a class="reference external" href="http://ironpython.net/tools/">Python Tools for Visual Studio</a> integrates
-IronPython directly into the Visual Studio development environment, making it
-an ideal choice for Windows developers.</p>
-<p>IronPython supports Python 2.7. <a class="footnote-reference" href="#iron-ver" id="id8">[3]</a> IronPython 3 <a class="footnote-reference" href="#iron-ver3" id="id9">[4]</a>
-is being developed, but is not ready for use as of September 2020.</p>
+<p><a class="reference external" href="http://ironpython.net/">IronPython</a> 是 Python 在 .NET 框架下的一个实现。它可以使用 Python 和 .NET 框架库，也可以将 Python 代码暴露给 .NET 框架中的其他语言。</p>
+<p><a class="reference external" href="http://ironpython.net/tools/">Visual Studio 的 Python 工具</a> 将 IronPython 直接集成到 Visual Studio 开发环境中，使其成为 Windows 开发者的理想选择。</p>
+<p>IronPython 支持 Python 2.7。<a class="footnote-reference" href="#iron-ver" id="id8">[3]</a> IronPython 3 <a class="footnote-reference" href="#iron-ver3" id="id9">[4]</a> 正在开发中，但截至 2020 年 9 月，还没有准备好使用。</p>
 </div>
 <div class="section" id="pythonnet">
 <h3>PythonNet<a class="headerlink" href="#pythonnet" title="永久链接至标题">¶</a></h3>
-<p><a class="reference external" href="http://pythonnet.github.io/">Python for .NET</a> is a package which
-provides near seamless integration of a natively installed Python
-installation with the .NET Common Language Runtime (CLR).  This is the
-inverse approach to that taken by IronPython (see above), to which it
-is more complementary than competing with.</p>
-<p>In conjunction with Mono, pythonnet enables native Python
-installations on non-Windows operating systems, such as OS X and
-Linux, to operate within the .NET framework.  It can be run in
-addition to IronPython without conflict.</p>
-<p>Pythonnet is compatible with Python 2.7 and 3.5-3.8. <a class="footnote-reference" href="#pythonnet-ver1" id="id10">[5]</a></p>
+<p><a class="reference external" href="http://pythonnet.github.io/">Python for .NET</a> 是一个软件包，它提供了原生安装的 Python 与 .NET 通用语言运行时（CLR）的近乎无缝的集成。这与 IronPython（见上文）采取的方法相反，它对 IronPython 的补充作用大于竞争作用。</p>
+<p>结合 Mono，pythonnet 使非 Windows 操作系统（如 OS X 和 Linux）上的本地 Python 安装在 .NET 框架内运行。它可以在 IronPython 的基础上运行而不发生冲突。</p>
+<p>Pythonnet 与 Python 2.7 和 3.5-3.8 兼容。<a class="footnote-reference" href="#pythonnet-ver1" id="id10">[5]</a></p>
 <table class="docutils footnote" frame="void" id="pypy-ver" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -291,11 +251,11 @@ addition to IronPython without conflict.</p>
 </ul>
   <h3><a href="../index.html">內容目录</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Picking a Python Interpreter (3 vs 2)</a><ul>
-<li><a class="reference internal" href="#the-state-of-python-3-2">The State of Python (3 &amp; 2)</a></li>
-<li><a class="reference internal" href="#recommendations">Recommendations</a></li>
-<li><a class="reference internal" href="#so-3">So…. 3?</a></li>
-<li><a class="reference internal" href="#implementations">Implementations</a><ul>
+<li><a class="reference internal" href="#">挑选一个 Python 解释器（3 vs 2）</a><ul>
+<li><a class="reference internal" href="#the-state-of-python-3-2">Python 的现状（3 &amp; 2）</a></li>
+<li><a class="reference internal" href="#recommendations">建议</a></li>
+<li><a class="reference internal" href="#so-3">所以…. 3？</a></li>
+<li><a class="reference internal" href="#implementations">实施方案</a><ul>
 <li><a class="reference internal" href="#cpython">CPython</a></li>
 <li><a class="reference internal" href="#pypy">PyPy</a></li>
 <li><a class="reference internal" href="#jython">Jython</a></li>
@@ -311,7 +271,7 @@ addition to IronPython without conflict.</p>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
       <li>Previous: <a href="../index.html" title="上一章">Python 搭车指南！</a></li>
-      <li>Next: <a href="installation.html" title="下一章">Properly Installing Python</a></li>
+      <li>Next: <a href="installation.html" title="下一章">正确安装 Python</a></li>
   </ul></li>
 </ul>
 </div>
