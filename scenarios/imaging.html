@@ -1,0 +1,281 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Image Manipulation &#8212; The Hitchhiker&#39;s Guide to Python</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Data Serialization" href="serialization.html" />
+    <link rel="prev" title="Scientific Applications" href="scientific.html" />
+  
+
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    div.body {
+      min-width: initial;
+      max-width: initial;
+    }
+  </style>
+
+  
+  <link rel="canonical" href="https://docs.python-guide.org/scenarios/imaging/"/>
+  <meta property="og:url" content="https://docs.python-guide.org/scenarios/imaging">
+  
+
+  <link rel="icon" type="image/png" href="https://media.readthedocs.org/images/favicon.png">
+
+  <meta name="google-site-verification" content="013PxE2_8KX9jdUSC5gr8QsfdxTXr1mFgmD9zplp5II" />
+
+  <meta name="twitter:card" content="summary">
+  <meta property="twitter:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:title" content="Image Manipulation &#8212; The Hitchhiker&#39;s Guide to Python">
+  <meta property="og:type" content="article">
+  
+  <meta property="og:description" content="">
+
+  <script>window.rp_prop_id = '29182759436';</script>
+  <script src="https://srv.realpython.net/tag.js" async></script>
+
+  <script src="https://d31vxm9ubutrmw.cloudfront.net/static/js/2169.js"></script>
+
+  
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37242602-11', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+  </head><body>
+
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            <div style="display:block;position:relative; margin-bottom: 1em;">
+              <div style="display:block;width:100%;padding-top:12.5%;"></div>
+              <div class="rpad" data-unit="8x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+            </div>
+            
+  <div class="section" id="image-manipulation">
+<h1>Image Manipulation<a class="headerlink" href="#image-manipulation" title="永久链接至标题">¶</a></h1>
+<img alt="../_images/34575689432_3de8e9a348_k_d.jpg" src="../_images/34575689432_3de8e9a348_k_d.jpg" />
+<p>Most image processing and manipulation techniques can be carried out
+effectively using two libraries: Python Imaging Library (PIL) and Open Source
+Computer Vision (OpenCV).</p>
+<p>A brief description of both is given below.</p>
+<div class="section" id="python-imaging-library">
+<h2>Python Imaging Library<a class="headerlink" href="#python-imaging-library" title="永久链接至标题">¶</a></h2>
+<p>The <a class="reference external" href="http://www.pythonware.com/products/pil/">Python Imaging Library</a>, or PIL
+for short, is one of the core libraries for image manipulation in Python. Unfortunately,
+its development has stagnated, with its last release in 2009.</p>
+<p>Luckily for you, there’s an actively-developed fork of PIL called
+<a class="reference external" href="http://python-pillow.github.io/">Pillow</a> – it’s easier to install, runs on
+all major operating systems, and supports Python 3.</p>
+<div class="section" id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="永久链接至标题">¶</a></h3>
+<p>Before installing Pillow, you’ll have to install Pillow’s prerequisites. Find
+the instructions for your platform in the
+<a class="reference external" href="https://pillow.readthedocs.io/en/3.0.0/installation.html">Pillow installation instructions</a>.</p>
+<p>After that, it’s straightforward:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install Pillow
+</pre></div>
+</div>
+</div>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="永久链接至标题">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">ImageFilter</span>
+<span class="c1">#Read image</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span> <span class="s1">&#39;image.jpg&#39;</span> <span class="p">)</span>
+<span class="c1">#Display image</span>
+<span class="n">im</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1">#Applying a filter to the image</span>
+<span class="n">im_sharp</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span> <span class="n">ImageFilter</span><span class="o">.</span><span class="n">SHARPEN</span> <span class="p">)</span>
+<span class="c1">#Saving the filtered image to a new file</span>
+<span class="n">im_sharp</span><span class="o">.</span><span class="n">save</span><span class="p">(</span> <span class="s1">&#39;image_sharpened.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;JPEG&#39;</span> <span class="p">)</span>
+
+<span class="c1">#Splitting the image into its respective bands, i.e. Red, Green,</span>
+<span class="c1">#and Blue for RGB</span>
+<span class="n">r</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">im_sharp</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+<span class="c1">#Viewing EXIF data embedded in image</span>
+<span class="n">exif_data</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">_getexif</span><span class="p">()</span>
+<span class="n">exif_data</span>
+</pre></div>
+</div>
+<p>There are more examples of the Pillow library in the
+<a class="reference external" href="https://pillow.readthedocs.io/en/3.0.x/handbook/tutorial.html">Pillow tutorial</a>.</p>
+</div>
+</div>
+<div class="section" id="open-source-computer-vision">
+<h2>Open Source Computer Vision<a class="headerlink" href="#open-source-computer-vision" title="永久链接至标题">¶</a></h2>
+<p>Open Source Computer Vision, more commonly known as OpenCV, is a more advanced
+image manipulation and processing software than PIL. It has been implemented
+in several languages and is widely used.</p>
+<div class="section" id="id2">
+<h3>Installation<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>In Python, image processing using OpenCV is implemented using the <code class="docutils literal notranslate"><span class="pre">cv2</span></code> and
+<code class="docutils literal notranslate"><span class="pre">NumPy</span></code> modules.  The <a class="reference external" href="http://docs.opencv.org/2.4/doc/tutorials/introduction/table_of_content_introduction/table_of_content_introduction.html#table-of-content-introduction">installation instructions for OpenCV</a>
+should guide you through configuring the project for yourself.</p>
+<p>NumPy can be downloaded from the Python Package Index(PyPI):</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install numpy
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>Example<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cv2</span>
+<span class="c1">#Read Image</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;testimg.jpg&#39;</span><span class="p">)</span>
+<span class="c1">#Display Image</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span><span class="n">img</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+
+<span class="c1">#Applying Grayscale filter to image</span>
+<span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+
+<span class="c1">#Saving filtered image to new file</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="s1">&#39;graytest.jpg&#39;</span><span class="p">,</span><span class="n">gray</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There are more Python-implemented examples of OpenCV in this <a class="reference external" href="https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_tutorials.html">collection of
+tutorials</a>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/python-guide-logo.png" title="The Hitchhiker's Guide to Python"/>
+  </a>
+</p>
+
+<p style="margin-left:auto; margin-right: auto;"><iframe src="https://ghbtns.com/github-btn.html?user=realpython&repo=python-guide&type=watch&count=true&size=large" allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe></p>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<style>
+.algolia-autocomplete{
+  width: 100%;
+  height: 1.5em
+}
+.algolia-autocomplete a{
+  border-bottom: none !important;
+}
+#doc_search{
+  width: 100%;
+  height: 100%;
+}
+</style>
+<input id="doc_search" placeholder="Search the doc" autofocus/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" onload="docsearch({
+  apiKey: '512b0d6c0c8578bed7662f5279c2249c',
+  indexName: 'python-guide',
+  inputSelector: '#doc_search',
+  debug: false // Set debug to true if you want to inspect the dropdown
+})" async></script>
+
+<p>
+  This opinionated guide exists to provide both novice and expert Python developers a best practice handbook to the installation, configuration, and usage of Python on a daily basis.
+</p>
+
+<div style="display:block;position:relative;margin: 1em 0 1em 0;">
+  <div style="display:block;width:100%;padding-top:100%;"></div>
+  <div class="rpad" data-unit="1x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+</div>
+
+<h3>O'Reilly Book</h3>
+
+<p>This guide is now available in tangible book form!</p>
+
+<p><a href="/guide-book" target="_blank"><img style="max-width: 100%; text-align: center;" src="/_static/guide-book-cover.jpg" alt="Python Guide Book Cover"></a></p>
+
+<p>All proceeds are being directly donated to the <a href="https://djangogirls.org">DjangoGirls</a> organization.</p>
+
+<h3>Translations</h3>
+<ul>
+  <li><a href="https://docs.python-guide.org/">English</a></li>
+  <li><a href="https://python-guide-fr.readthedocs.io/fr/latest/">French</a></li>
+  <li><a href="https://pythonguidecn.readthedocs.io/zh/latest/">Chinese</a></li>
+  <li><a href="http://python-guideja.readthedocs.io/ja/latest/">Japanese</a></li>
+  <li><a href="https://python-guide-kr.readthedocs.io/ko/latest/">Korean</a></li>
+  <li><a href="http://python-guide-fil.readthedocs.io/en/latest/">Filipino</a></li>
+  <li><a href="http://python-guide-pt-br.readthedocs.io/pt_BR/latest/">Brazilian Portuguese</a></li>
+</ul>
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Image Manipulation</a><ul>
+<li><a class="reference internal" href="#python-imaging-library">Python Imaging Library</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#open-source-computer-vision">Open Source Computer Vision</a><ul>
+<li><a class="reference internal" href="#id2">Installation</a></li>
+<li><a class="reference internal" href="#id3">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="scientific.html" title="上一章">Scientific Applications</a></li>
+      <li>Next: <a href="serialization.html" title="下一章">Data Serialization</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><!-- Alabaster (krTheme++) Hacks -->
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+  <div style="text-align: center;" id="waldo-tag-2171"></div>
+  <p>&copy;2011-2021 <a href="https://www.kennethreitz.org/projects">Kenneth Reitz</a> &amp; <a href="https://realpython.com">Real Python</a>. <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</a></p>
+</div>
+
+  </body>
+</html>

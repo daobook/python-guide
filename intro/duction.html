@@ -1,0 +1,263 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Introduction &#8212; The Hitchhiker&#39;s Guide to Python</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="The Community" href="community.html" />
+    <link rel="prev" title="Freezing Your Code" href="../shipping/freezing.html" />
+  
+
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    div.body {
+      min-width: initial;
+      max-width: initial;
+    }
+  </style>
+
+  
+  <link rel="canonical" href="https://docs.python-guide.org/intro/duction/"/>
+  <meta property="og:url" content="https://docs.python-guide.org/intro/duction">
+  
+
+  <link rel="icon" type="image/png" href="https://media.readthedocs.org/images/favicon.png">
+
+  <meta name="google-site-verification" content="013PxE2_8KX9jdUSC5gr8QsfdxTXr1mFgmD9zplp5II" />
+
+  <meta name="twitter:card" content="summary">
+  <meta property="twitter:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:title" content="Introduction &#8212; The Hitchhiker&#39;s Guide to Python">
+  <meta property="og:type" content="article">
+  
+  <meta property="og:description" content="">
+
+  <script>window.rp_prop_id = '29182759436';</script>
+  <script src="https://srv.realpython.net/tag.js" async></script>
+
+  <script src="https://d31vxm9ubutrmw.cloudfront.net/static/js/2169.js"></script>
+
+  
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37242602-11', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+  </head><body>
+
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            <div style="display:block;position:relative; margin-bottom: 1em;">
+              <div style="display:block;width:100%;padding-top:12.5%;"></div>
+              <div class="rpad" data-unit="8x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+            </div>
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="永久链接至标题">¶</a></h1>
+<img alt="../_images/34725946825_0f85497e60_k_d.jpg" src="../_images/34725946825_0f85497e60_k_d.jpg" />
+<p>From the <a class="reference external" href="http://python.org/about/">official Python website</a>:</p>
+<p>Python is a general-purpose, high-level programming language similar
+to Tcl, Perl, Ruby, Scheme, or Java. Some of its main key features
+include:</p>
+<ul>
+<li><p class="first"><strong>very clear, readable syntax</strong></p>
+<p>Python’s philosophy focuses on readability, from code blocks
+delineated with significant whitespace to intuitive keywords in
+place of inscrutable punctuation.</p>
+</li>
+<li><p class="first"><strong>extensive standard libraries and third party modules for virtually
+any task</strong></p>
+<p>Python is sometimes described with the words “batteries included”
+because of its extensive
+<a class="reference external" href="http://docs.python.org/library/">standard library</a>, which includes
+modules for regular expressions, file IO, fraction handling,
+object serialization, and much more.</p>
+<p>Additionally, the
+<a class="reference external" href="https://pypi.org">Python Package Index</a> is available
+for users to submit their packages for widespread use, similar to
+Perl’s <a class="reference external" href="https://www.cpan.org">CPAN</a>. There is a thriving community
+of very powerful Python frameworks and tools like
+the <a class="reference external" href="https://www.djangoproject.com">Django</a> web framework and the
+<a class="reference external" href="http://numpy.scipy.org">NumPy</a> set of math routines.</p>
+</li>
+<li><p class="first"><strong>integration with other systems</strong></p>
+<p>Python can integrate with <a class="reference external" href="http://www.jython.org">Java libraries</a>,
+enabling it to be used with the rich Java environment that corporate
+programmers are used to. It can also be
+<a class="reference external" href="http://docs.python.org/extending/">extended by C or C++ modules</a>
+when speed is of the essence.</p>
+</li>
+<li><p class="first"><strong>ubiquity on computers</strong></p>
+<p>Python is available on Windows, *nix, and Mac. It runs wherever the
+Java virtual machine runs, and the reference implementation CPython
+can help bring Python to wherever there is a working C compiler.</p>
+</li>
+<li><p class="first"><strong>friendly community</strong></p>
+<p>Python has a vibrant and large <a class="reference internal" href="community.html#the-community"><span class="std std-ref">community</span></a>
+which maintains wikis, conferences, countless repositories,
+mailing lists, IRC channels, and so much more. Heck, the Python
+community is even helping to write this guide!</p>
+</li>
+</ul>
+<div class="section" id="about-this-guide">
+<span id="about-ref"></span><h2>About This Guide<a class="headerlink" href="#about-this-guide" title="永久链接至标题">¶</a></h2>
+<div class="section" id="purpose">
+<h3>Purpose<a class="headerlink" href="#purpose" title="永久链接至标题">¶</a></h3>
+<p>The Hitchhiker’s Guide to Python exists to provide both novice and expert
+Python developers a best practice handbook for the installation, configuration,
+and usage of Python on a daily basis.</p>
+</div>
+<div class="section" id="by-the-community">
+<h3>By the Community<a class="headerlink" href="#by-the-community" title="永久链接至标题">¶</a></h3>
+<p>This guide is architected and maintained by <a class="reference external" href="https://github.com/kennethreitz">Kenneth Reitz</a> in an open fashion. This is a
+community-driven effort that serves one purpose: to serve the community.</p>
+</div>
+<div class="section" id="for-the-community">
+<h3>For the Community<a class="headerlink" href="#for-the-community" title="永久链接至标题">¶</a></h3>
+<p>All contributions to the Guide are welcome, from Pythonistas of all levels.
+If you think there’s a gap in what the Guide covers, fork the Guide on
+GitHub and submit a pull request.</p>
+<p>Contributions are welcome from everyone, whether they’re an old hand or a
+first-time Pythonista, and the authors to the Guide will gladly help if you
+have any questions about the appropriateness, completeness, or accuracy of
+a contribution.</p>
+<p>To get started working on The Hitchhiker’s Guide,
+see the <a class="reference internal" href="../notes/contribute.html"><span class="doc">Contribute</span></a> page.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/python-guide-logo.png" title="The Hitchhiker's Guide to Python"/>
+  </a>
+</p>
+
+<p style="margin-left:auto; margin-right: auto;"><iframe src="https://ghbtns.com/github-btn.html?user=realpython&repo=python-guide&type=watch&count=true&size=large" allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe></p>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<style>
+.algolia-autocomplete{
+  width: 100%;
+  height: 1.5em
+}
+.algolia-autocomplete a{
+  border-bottom: none !important;
+}
+#doc_search{
+  width: 100%;
+  height: 100%;
+}
+</style>
+<input id="doc_search" placeholder="Search the doc" autofocus/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" onload="docsearch({
+  apiKey: '512b0d6c0c8578bed7662f5279c2249c',
+  indexName: 'python-guide',
+  inputSelector: '#doc_search',
+  debug: false // Set debug to true if you want to inspect the dropdown
+})" async></script>
+
+<p>
+  This opinionated guide exists to provide both novice and expert Python developers a best practice handbook to the installation, configuration, and usage of Python on a daily basis.
+</p>
+
+<div style="display:block;position:relative;margin: 1em 0 1em 0;">
+  <div style="display:block;width:100%;padding-top:100%;"></div>
+  <div class="rpad" data-unit="1x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+</div>
+
+<h3>O'Reilly Book</h3>
+
+<p>This guide is now available in tangible book form!</p>
+
+<p><a href="/guide-book" target="_blank"><img style="max-width: 100%; text-align: center;" src="/_static/guide-book-cover.jpg" alt="Python Guide Book Cover"></a></p>
+
+<p>All proceeds are being directly donated to the <a href="https://djangogirls.org">DjangoGirls</a> organization.</p>
+
+<h3>Translations</h3>
+<ul>
+  <li><a href="https://docs.python-guide.org/">English</a></li>
+  <li><a href="https://python-guide-fr.readthedocs.io/fr/latest/">French</a></li>
+  <li><a href="https://pythonguidecn.readthedocs.io/zh/latest/">Chinese</a></li>
+  <li><a href="http://python-guideja.readthedocs.io/ja/latest/">Japanese</a></li>
+  <li><a href="https://python-guide-kr.readthedocs.io/ko/latest/">Korean</a></li>
+  <li><a href="http://python-guide-fil.readthedocs.io/en/latest/">Filipino</a></li>
+  <li><a href="http://python-guide-pt-br.readthedocs.io/pt_BR/latest/">Brazilian Portuguese</a></li>
+</ul>
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction</a><ul>
+<li><a class="reference internal" href="#about-this-guide">About This Guide</a><ul>
+<li><a class="reference internal" href="#purpose">Purpose</a></li>
+<li><a class="reference internal" href="#by-the-community">By the Community</a></li>
+<li><a class="reference internal" href="#for-the-community">For the Community</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../shipping/freezing.html" title="上一章">Freezing Your Code</a></li>
+      <li>Next: <a href="community.html" title="下一章">The Community</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><!-- Alabaster (krTheme++) Hacks -->
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+  <div style="text-align: center;" id="waldo-tag-2171"></div>
+  <p>&copy;2011-2021 <a href="https://www.kennethreitz.org/projects">Kenneth Reitz</a> &amp; <a href="https://realpython.com">Real Python</a>. <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</a></p>
+</div>
+
+  </body>
+</html>

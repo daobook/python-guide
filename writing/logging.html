@@ -1,0 +1,375 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Logging &#8212; The Hitchhiker&#39;s Guide to Python</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Common Gotchas" href="gotchas.html" />
+    <link rel="prev" title="Testing Your Code" href="tests.html" />
+  
+
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    div.body {
+      min-width: initial;
+      max-width: initial;
+    }
+  </style>
+
+  
+  <link rel="canonical" href="https://docs.python-guide.org/writing/logging/"/>
+  <meta property="og:url" content="https://docs.python-guide.org/writing/logging">
+  
+
+  <link rel="icon" type="image/png" href="https://media.readthedocs.org/images/favicon.png">
+
+  <meta name="google-site-verification" content="013PxE2_8KX9jdUSC5gr8QsfdxTXr1mFgmD9zplp5II" />
+
+  <meta name="twitter:card" content="summary">
+  <meta property="twitter:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:title" content="Logging &#8212; The Hitchhiker&#39;s Guide to Python">
+  <meta property="og:type" content="article">
+  
+  <meta property="og:description" content="">
+
+  <script>window.rp_prop_id = '29182759436';</script>
+  <script src="https://srv.realpython.net/tag.js" async></script>
+
+  <script src="https://d31vxm9ubutrmw.cloudfront.net/static/js/2169.js"></script>
+
+  
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37242602-11', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+  </head><body>
+
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            <div style="display:block;position:relative; margin-bottom: 1em;">
+              <div style="display:block;width:100%;padding-top:12.5%;"></div>
+              <div class="rpad" data-unit="8x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+            </div>
+            
+  <div class="section" id="logging">
+<h1>Logging<a class="headerlink" href="#logging" title="永久链接至标题">¶</a></h1>
+<img alt="../_images/35254379756_c9fe23f843_k_d.jpg" src="../_images/35254379756_c9fe23f843_k_d.jpg" />
+<p>The <a class="reference external" href="https://docs.python.org/3/library/logging.html#module-logging" title="(在 Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code></a> module has been a part of Python’s Standard Library since
+version 2.3.  It is succinctly described in <span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0282"><strong>PEP 282</strong></a>.  The documentation
+is notoriously hard to read, except for the <a class="reference external" href="http://docs.python.org/3/howto/logging.html#logging-basic-tutorial">basic logging tutorial</a>.</p>
+<p>As an alternative, <a class="reference external" href="https://github.com/Delgan/loguru">loguru</a> provides an approach for logging, nearly as simple as using a simple <code class="docutils literal notranslate"><span class="pre">print</span></code> statement.</p>
+<p>Logging serves two purposes:</p>
+<ul class="simple">
+<li><strong>Diagnostic logging</strong> records events related to the application’s
+operation. If a user calls in to report an error, for example, the logs
+can be searched for context.</li>
+<li><strong>Audit logging</strong> records events for business analysis. A user’s
+transactions can be extracted and combined with other user details for
+reports or to optimize a business goal.</li>
+</ul>
+<div class="section" id="or-print">
+<h2>… or Print?<a class="headerlink" href="#or-print" title="永久链接至标题">¶</a></h2>
+<p>The only time that <code class="docutils literal notranslate"><span class="pre">print</span></code> is a better option than logging is when
+the goal is to display a help statement for a command line application.
+Other reasons why logging is better than <code class="docutils literal notranslate"><span class="pre">print</span></code>:</p>
+<ul class="simple">
+<li>The <a class="reference external" href="https://docs.python.org/3/library/logging.html#logrecord-attributes">log record</a>, which is created with every logging event, contains
+readily available diagnostic information such as the file name, full path,
+function, and line number of the logging event.</li>
+<li>Events logged in included modules are automatically accessible via the root
+logger to your application’s logging stream, unless you filter them out.</li>
+<li>Logging can be selectively silenced by using the method
+<a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Logger.setLevel" title="(在 Python v3.10)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">logging.Logger.setLevel()</span></code></a> or disabled by setting the attribute
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">logging.Logger.disabled</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</li>
+</ul>
+</div>
+<div class="section" id="logging-in-a-library">
+<h2>Logging in a Library<a class="headerlink" href="#logging-in-a-library" title="永久链接至标题">¶</a></h2>
+<p>Notes for <a class="reference external" href="https://docs.python.org/3/howto/logging.html#configuring-logging-for-a-library">configuring logging for a library</a> are in the
+<a class="reference external" href="http://docs.python.org/3/howto/logging.html">logging tutorial</a>.  Because the <em>user</em>, not the library, should
+dictate what happens when a logging event occurs, one admonition bears
+repeating:</p>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p class="last">It is strongly advised that you do not add any handlers other than
+NullHandler to your library’s loggers.</p>
+</div>
+<p>Best practice when instantiating loggers in a library is to only create them
+using the <code class="docutils literal notranslate"><span class="pre">__name__</span></code> global variable: the <a class="reference external" href="https://docs.python.org/3/library/logging.html#module-logging" title="(在 Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code></a> module creates a
+hierarchy of loggers using dot notation, so using <code class="docutils literal notranslate"><span class="pre">__name__</span></code> ensures
+no name collisions.</p>
+<p>Here is an example of the best practice from the <a class="reference external" href="https://github.com/kennethreitz/requests">requests source</a> – place
+this in your <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">NullHandler</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="logging-in-an-application">
+<h2>Logging in an Application<a class="headerlink" href="#logging-in-an-application" title="永久链接至标题">¶</a></h2>
+<p>The <a class="reference external" href="https://12factor.net">twelve factor app</a>, an authoritative reference
+for good practice in application development, contains a section on
+<a class="reference external" href="https://12factor.net/logs">logging best practice</a>. It emphatically
+advocates for treating log events as an event stream, and for
+sending that event stream to standard output to be handled by the
+application environment.</p>
+<p>There are at least three ways to configure a logger:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>Using an INI-formatted file:</dt>
+<dd><ul class="first last">
+<li><strong>Pro</strong>: possible to update configuration while running, using the
+function <a class="reference external" href="https://docs.python.org/3/library/logging.config.html#logging.config.listen" title="(在 Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">logging.config.listen()</span></code></a> to listen on a socket.</li>
+<li><strong>Con</strong>: less control (e.g. custom subclassed filters or loggers)
+than possible when configuring a logger in code.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Using a dictionary or a JSON-formatted file:</dt>
+<dd><ul class="first last">
+<li><strong>Pro</strong>: in addition to updating while running, it is possible to load
+from a file using the <a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(在 Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> module, in the standard library since
+Python 2.6.</li>
+<li><strong>Con</strong>: less control than when configuring a logger in code.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Using code:</dt>
+<dd><ul class="first last">
+<li><strong>Pro</strong>: complete control over the configuration.</li>
+<li><strong>Con</strong>: modifications require a change to the source code.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="section" id="example-configuration-via-an-ini-file">
+<h3>Example Configuration via an INI File<a class="headerlink" href="#example-configuration-via-an-ini-file" title="永久链接至标题">¶</a></h3>
+<p>Let us say that the file is named <code class="docutils literal notranslate"><span class="pre">logging_config.ini</span></code>.
+More details for the file format are in the <a class="reference external" href="https://docs.python.org/3/howto/logging.html#configuring-logging">logging configuration</a>
+section of the <a class="reference external" href="http://docs.python.org/3/howto/logging.html">logging tutorial</a>.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[loggers]</span>
+<span class="na">keys</span><span class="o">=</span><span class="s">root</span>
+
+<span class="k">[handlers]</span>
+<span class="na">keys</span><span class="o">=</span><span class="s">stream_handler</span>
+
+<span class="k">[formatters]</span>
+<span class="na">keys</span><span class="o">=</span><span class="s">formatter</span>
+
+<span class="k">[logger_root]</span>
+<span class="na">level</span><span class="o">=</span><span class="s">DEBUG</span>
+<span class="na">handlers</span><span class="o">=</span><span class="s">stream_handler</span>
+
+<span class="k">[handler_stream_handler]</span>
+<span class="na">class</span><span class="o">=</span><span class="s">StreamHandler</span>
+<span class="na">level</span><span class="o">=</span><span class="s">DEBUG</span>
+<span class="na">formatter</span><span class="o">=</span><span class="s">formatter</span>
+<span class="na">args</span><span class="o">=</span><span class="s">(sys.stderr,)</span>
+
+<span class="k">[formatter_formatter]</span>
+<span class="na">format</span><span class="o">=</span><span class="s">%(asctime)s %(name)-12s %(levelname)-8s %(message)s</span>
+</pre></div>
+</div>
+<p>Then use <code class="xref py py-meth docutils literal notranslate"><span class="pre">logging.config.fileConfig()</span></code> in the code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">logging.config</span> <span class="kn">import</span> <span class="n">fileConfig</span>
+
+<span class="n">fileConfig</span><span class="p">(</span><span class="s1">&#39;logging_config.ini&#39;</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;often makes a very good meal of </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;visiting tourists&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-configuration-via-a-dictionary">
+<h3>Example Configuration via a Dictionary<a class="headerlink" href="#example-configuration-via-a-dictionary" title="永久链接至标题">¶</a></h3>
+<p>As of Python 2.7, you can use a dictionary with configuration details.
+<span class="target" id="index-1"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0391"><strong>PEP 391</strong></a> contains a list of the mandatory and optional elements in
+the configuration dictionary.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">logging.config</span> <span class="kn">import</span> <span class="n">dictConfig</span>
+
+<span class="n">logging_config</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">formatters</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;f&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;format&#39;</span><span class="p">:</span>
+              <span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(name)-12s</span><span class="s1"> </span><span class="si">%(levelname)-8s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">}</span>
+        <span class="p">},</span>
+    <span class="n">handlers</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;h&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;logging.StreamHandler&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;formatter&#39;</span><span class="p">:</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">}</span>
+        <span class="p">},</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;h&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+        <span class="p">},</span>
+<span class="p">)</span>
+
+<span class="n">dictConfig</span><span class="p">(</span><span class="n">logging_config</span><span class="p">)</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;often makes a very good meal of </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;visiting tourists&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-configuration-directly-in-code">
+<h3>Example Configuration Directly in Code<a class="headerlink" href="#example-configuration-directly-in-code" title="永久链接至标题">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+<span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+<span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+        <span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(name)-12s</span><span class="s1"> </span><span class="si">%(levelname)-8s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;often makes a very good meal of </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;visiting tourists&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/python-guide-logo.png" title="The Hitchhiker's Guide to Python"/>
+  </a>
+</p>
+
+<p style="margin-left:auto; margin-right: auto;"><iframe src="https://ghbtns.com/github-btn.html?user=realpython&repo=python-guide&type=watch&count=true&size=large" allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe></p>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<style>
+.algolia-autocomplete{
+  width: 100%;
+  height: 1.5em
+}
+.algolia-autocomplete a{
+  border-bottom: none !important;
+}
+#doc_search{
+  width: 100%;
+  height: 100%;
+}
+</style>
+<input id="doc_search" placeholder="Search the doc" autofocus/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" onload="docsearch({
+  apiKey: '512b0d6c0c8578bed7662f5279c2249c',
+  indexName: 'python-guide',
+  inputSelector: '#doc_search',
+  debug: false // Set debug to true if you want to inspect the dropdown
+})" async></script>
+
+<p>
+  This opinionated guide exists to provide both novice and expert Python developers a best practice handbook to the installation, configuration, and usage of Python on a daily basis.
+</p>
+
+<div style="display:block;position:relative;margin: 1em 0 1em 0;">
+  <div style="display:block;width:100%;padding-top:100%;"></div>
+  <div class="rpad" data-unit="1x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+</div>
+
+<h3>O'Reilly Book</h3>
+
+<p>This guide is now available in tangible book form!</p>
+
+<p><a href="/guide-book" target="_blank"><img style="max-width: 100%; text-align: center;" src="/_static/guide-book-cover.jpg" alt="Python Guide Book Cover"></a></p>
+
+<p>All proceeds are being directly donated to the <a href="https://djangogirls.org">DjangoGirls</a> organization.</p>
+
+<h3>Translations</h3>
+<ul>
+  <li><a href="https://docs.python-guide.org/">English</a></li>
+  <li><a href="https://python-guide-fr.readthedocs.io/fr/latest/">French</a></li>
+  <li><a href="https://pythonguidecn.readthedocs.io/zh/latest/">Chinese</a></li>
+  <li><a href="http://python-guideja.readthedocs.io/ja/latest/">Japanese</a></li>
+  <li><a href="https://python-guide-kr.readthedocs.io/ko/latest/">Korean</a></li>
+  <li><a href="http://python-guide-fil.readthedocs.io/en/latest/">Filipino</a></li>
+  <li><a href="http://python-guide-pt-br.readthedocs.io/pt_BR/latest/">Brazilian Portuguese</a></li>
+</ul>
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Logging</a><ul>
+<li><a class="reference internal" href="#or-print">… or Print?</a></li>
+<li><a class="reference internal" href="#logging-in-a-library">Logging in a Library</a></li>
+<li><a class="reference internal" href="#logging-in-an-application">Logging in an Application</a><ul>
+<li><a class="reference internal" href="#example-configuration-via-an-ini-file">Example Configuration via an INI File</a></li>
+<li><a class="reference internal" href="#example-configuration-via-a-dictionary">Example Configuration via a Dictionary</a></li>
+<li><a class="reference internal" href="#example-configuration-directly-in-code">Example Configuration Directly in Code</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="tests.html" title="上一章">Testing Your Code</a></li>
+      <li>Next: <a href="gotchas.html" title="下一章">Common Gotchas</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><!-- Alabaster (krTheme++) Hacks -->
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+  <div style="text-align: center;" id="waldo-tag-2171"></div>
+  <p>&copy;2011-2021 <a href="https://www.kennethreitz.org/projects">Kenneth Reitz</a> &amp; <a href="https://realpython.com">Real Python</a>. <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</a></p>
+</div>
+
+  </body>
+</html>

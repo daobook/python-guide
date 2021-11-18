@@ -1,0 +1,378 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Data Serialization &#8212; The Hitchhiker&#39;s Guide to Python</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="XML parsing" href="xml.html" />
+    <link rel="prev" title="Image Manipulation" href="imaging.html" />
+  
+
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    div.body {
+      min-width: initial;
+      max-width: initial;
+    }
+  </style>
+
+  
+  <link rel="canonical" href="https://docs.python-guide.org/scenarios/serialization/"/>
+  <meta property="og:url" content="https://docs.python-guide.org/scenarios/serialization">
+  
+
+  <link rel="icon" type="image/png" href="https://media.readthedocs.org/images/favicon.png">
+
+  <meta name="google-site-verification" content="013PxE2_8KX9jdUSC5gr8QsfdxTXr1mFgmD9zplp5II" />
+
+  <meta name="twitter:card" content="summary">
+  <meta property="twitter:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:title" content="Data Serialization &#8212; The Hitchhiker&#39;s Guide to Python">
+  <meta property="og:type" content="article">
+  
+  <meta property="og:description" content="">
+
+  <script>window.rp_prop_id = '29182759436';</script>
+  <script src="https://srv.realpython.net/tag.js" async></script>
+
+  <script src="https://d31vxm9ubutrmw.cloudfront.net/static/js/2169.js"></script>
+
+  
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37242602-11', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+  </head><body>
+
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            <div style="display:block;position:relative; margin-bottom: 1em;">
+              <div style="display:block;width:100%;padding-top:12.5%;"></div>
+              <div class="rpad" data-unit="8x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+            </div>
+            
+  <div class="section" id="data-serialization">
+<h1>Data Serialization<a class="headerlink" href="#data-serialization" title="永久链接至标题">¶</a></h1>
+<img alt="../_images/33467946364_3e59bd376a_k_d.jpg" src="../_images/33467946364_3e59bd376a_k_d.jpg" />
+<div class="section" id="what-is-data-serialization">
+<h2>What is data serialization?<a class="headerlink" href="#what-is-data-serialization" title="永久链接至标题">¶</a></h2>
+<p>Data serialization is the process of converting structured data to a format
+that allows sharing or storage of the data in a form that allows recovery of its original
+structure. In some cases, the secondary intention of data
+serialization is to minimize the data’s size which then
+reduces disk space or bandwidth requirements.</p>
+</div>
+<div class="section" id="flat-vs-nested-data">
+<h2>Flat vs. Nested data<a class="headerlink" href="#flat-vs-nested-data" title="永久链接至标题">¶</a></h2>
+<p>Before beginning to serialize data, it is important to identify or decide how the
+data should be structured during data serialization - flat or nested.
+The differences in the two styles are shown in the below examples.</p>
+<p>Flat style:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="s2">&quot;Type&quot;</span> <span class="p">:</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;field1&quot;</span><span class="p">:</span> <span class="s2">&quot;value1&quot;</span><span class="p">,</span> <span class="s2">&quot;field2&quot;</span><span class="p">:</span> <span class="s2">&quot;value2&quot;</span><span class="p">,</span> <span class="s2">&quot;field3&quot;</span><span class="p">:</span> <span class="s2">&quot;value3&quot;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>Nested style:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;A&quot;</span>
+    <span class="p">{</span> <span class="s2">&quot;field1&quot;</span><span class="p">:</span> <span class="s2">&quot;value1&quot;</span><span class="p">,</span> <span class="s2">&quot;field2&quot;</span><span class="p">:</span> <span class="s2">&quot;value2&quot;</span><span class="p">,</span> <span class="s2">&quot;field3&quot;</span><span class="p">:</span> <span class="s2">&quot;value3&quot;</span> <span class="p">}</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>For more reading on the two styles, please see the discussion on
+<a class="reference external" href="https://mail.python.org/pipermail/python-list/2010-October/590762.html">Python mailing list</a>,
+<a class="reference external" href="https://www.ietf.org/mail-archive/web/json/current/msg03739.html">IETF mailing list</a> and
+<a class="reference external" href="https://softwareengineering.stackexchange.com/questions/350623/flat-or-nested-json-for-hierarchal-data">in stackexchange</a>.</p>
+</div>
+<div class="section" id="serializing-text">
+<h2>Serializing Text<a class="headerlink" href="#serializing-text" title="永久链接至标题">¶</a></h2>
+<div class="section" id="simple-file-flat-data">
+<h3>Simple file (flat data)<a class="headerlink" href="#simple-file-flat-data" title="永久链接至标题">¶</a></h3>
+<p>If the data to be serialized is located in a file and contains flat data, Python offers two methods to serialize data.</p>
+<div class="section" id="repr">
+<h4>repr<a class="headerlink" href="#repr" title="永久链接至标题">¶</a></h4>
+<p>The repr method in Python takes a single object parameter and returns a printable representation of the input:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># input as flat text</span>
+<span class="n">a</span> <span class="o">=</span>  <span class="p">{</span> <span class="s2">&quot;Type&quot;</span> <span class="p">:</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;field1&quot;</span><span class="p">:</span> <span class="s2">&quot;value1&quot;</span><span class="p">,</span> <span class="s2">&quot;field2&quot;</span><span class="p">:</span> <span class="s2">&quot;value2&quot;</span><span class="p">,</span> <span class="s2">&quot;field3&quot;</span><span class="p">:</span> <span class="s2">&quot;value3&quot;</span> <span class="p">}</span>
+
+<span class="c1"># the same input can also be read from a file</span>
+<span class="n">a</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/tmp/file.py&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+<span class="c1"># returns a printable representation of the input;</span>
+<span class="c1"># the output can be written to a file as well</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+
+<span class="c1"># write content to files using repr</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/tmp/file.py&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ast-literal-eval">
+<h4>ast.literal_eval<a class="headerlink" href="#ast-literal-eval" title="永久链接至标题">¶</a></h4>
+<p>The literal_eval method safely parses and evaluates an expression for a Python datatype.
+Supported data types are: strings, numbers, tuples, lists, dicts, booleans, and None.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/tmp/file.py&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span> <span class="n">inp</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="csv-file-flat-data">
+<h3>CSV file (flat data)<a class="headerlink" href="#csv-file-flat-data" title="永久链接至标题">¶</a></h3>
+<p>The CSV module in Python implements classes to read and write tabular
+data in CSV format.</p>
+<p>Simple example for reading:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reading CSV content from a file</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/tmp/file.csv&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Simple example for writing:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Writing CSV content to a file</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/temp/file.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">writerows</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The module’s contents, functions, and examples can be found
+<a class="reference external" href="https://docs.python.org/3/library/csv.html">in the Python documentation</a>.</p>
+</div>
+<div class="section" id="yaml-nested-data">
+<h3>YAML (nested data)<a class="headerlink" href="#yaml-nested-data" title="永久链接至标题">¶</a></h3>
+<p>There are many third party modules to parse and read/write YAML file
+structures in Python. One such example is below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reading YAML content from a file using the load method</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/tmp/file.yaml&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+    <span class="k">except</span> <span class="n">yaml</span><span class="o">.</span><span class="n">YAMLError</span> <span class="k">as</span> <span class="n">ymlexcp</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">ymlexcp</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Documentation on the third party module can be found
+<a class="reference external" href="https://pyyaml.org/wiki/PyYAMLDocumentation">in the PyYAML Documentation</a>.</p>
+</div>
+<div class="section" id="json-file-nested-data">
+<h3>JSON file (nested data)<a class="headerlink" href="#json-file-nested-data" title="永久链接至标题">¶</a></h3>
+<p>Python’s JSON module can be used to read and write JSON files.
+Example code is below.</p>
+<p>Reading:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reading JSON content from a file</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/tmp/file.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Writing:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Writing JSON content to a file using the dump method</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/tmp/file.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="xml-nested-data">
+<h3>XML (nested data)<a class="headerlink" href="#xml-nested-data" title="永久链接至标题">¶</a></h3>
+<p>XML parsing in Python is possible using the <cite>xml</cite> package.</p>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># reading XML content from a file</span>
+<span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">as</span> <span class="nn">ET</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">&#39;country_data.xml&#39;</span><span class="p">)</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>More documentation on using the <cite>xml.dom</cite> and <cite>xml.sax</cite> packages can be found
+<a class="reference external" href="https://docs.python.org/3/library/xml.html">in the Python XML library documentation</a>.</p>
+</div>
+</div>
+<div class="section" id="binary">
+<h2>Binary<a class="headerlink" href="#binary" title="永久链接至标题">¶</a></h2>
+<div class="section" id="numpy-array-flat-data">
+<h3>NumPy Array (flat data)<a class="headerlink" href="#numpy-array-flat-data" title="永久链接至标题">¶</a></h3>
+<p>Python’s NumPy array can be used to serialize and deserialize data to and from byte representation.</p>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">NumPy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="c1"># Converting NumPy array to byte format</span>
+<span class="n">byte_output</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span> <span class="p">])</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
+
+<span class="c1"># Converting byte format back to NumPy array</span>
+<span class="n">array_format</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">byte_output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pickle-nested-data">
+<h3>Pickle (nested data)<a class="headerlink" href="#pickle-nested-data" title="永久链接至标题">¶</a></h3>
+<p>The native data serialization module for Python is called <a class="reference external" href="https://docs.python.org/2/library/pickle.html">Pickle</a>.</p>
+<p>Here’s an example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="c1">#Here&#39;s an example dict</span>
+<span class="n">grades</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;Alice&#39;</span><span class="p">:</span> <span class="mi">89</span><span class="p">,</span> <span class="s1">&#39;Bob&#39;</span><span class="p">:</span> <span class="mi">72</span><span class="p">,</span> <span class="s1">&#39;Charles&#39;</span><span class="p">:</span> <span class="mi">87</span> <span class="p">}</span>
+
+<span class="c1">#Use dumps to convert the object to a serialized string</span>
+<span class="n">serial_grades</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span> <span class="n">grades</span> <span class="p">)</span>
+
+<span class="c1">#Use loads to de-serialize an object</span>
+<span class="n">received_grades</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span> <span class="n">serial_grades</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="protobuf">
+<h2>Protobuf<a class="headerlink" href="#protobuf" title="永久链接至标题">¶</a></h2>
+<p>If you’re looking for a serialization module that has support in multiple
+languages, Google’s <a class="reference external" href="https://developers.google.com/protocol-buffers">Protobuf</a> library is an option.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/python-guide-logo.png" title="The Hitchhiker's Guide to Python"/>
+  </a>
+</p>
+
+<p style="margin-left:auto; margin-right: auto;"><iframe src="https://ghbtns.com/github-btn.html?user=realpython&repo=python-guide&type=watch&count=true&size=large" allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe></p>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<style>
+.algolia-autocomplete{
+  width: 100%;
+  height: 1.5em
+}
+.algolia-autocomplete a{
+  border-bottom: none !important;
+}
+#doc_search{
+  width: 100%;
+  height: 100%;
+}
+</style>
+<input id="doc_search" placeholder="Search the doc" autofocus/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" onload="docsearch({
+  apiKey: '512b0d6c0c8578bed7662f5279c2249c',
+  indexName: 'python-guide',
+  inputSelector: '#doc_search',
+  debug: false // Set debug to true if you want to inspect the dropdown
+})" async></script>
+
+<p>
+  This opinionated guide exists to provide both novice and expert Python developers a best practice handbook to the installation, configuration, and usage of Python on a daily basis.
+</p>
+
+<div style="display:block;position:relative;margin: 1em 0 1em 0;">
+  <div style="display:block;width:100%;padding-top:100%;"></div>
+  <div class="rpad" data-unit="1x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+</div>
+
+<h3>O'Reilly Book</h3>
+
+<p>This guide is now available in tangible book form!</p>
+
+<p><a href="/guide-book" target="_blank"><img style="max-width: 100%; text-align: center;" src="/_static/guide-book-cover.jpg" alt="Python Guide Book Cover"></a></p>
+
+<p>All proceeds are being directly donated to the <a href="https://djangogirls.org">DjangoGirls</a> organization.</p>
+
+<h3>Translations</h3>
+<ul>
+  <li><a href="https://docs.python-guide.org/">English</a></li>
+  <li><a href="https://python-guide-fr.readthedocs.io/fr/latest/">French</a></li>
+  <li><a href="https://pythonguidecn.readthedocs.io/zh/latest/">Chinese</a></li>
+  <li><a href="http://python-guideja.readthedocs.io/ja/latest/">Japanese</a></li>
+  <li><a href="https://python-guide-kr.readthedocs.io/ko/latest/">Korean</a></li>
+  <li><a href="http://python-guide-fil.readthedocs.io/en/latest/">Filipino</a></li>
+  <li><a href="http://python-guide-pt-br.readthedocs.io/pt_BR/latest/">Brazilian Portuguese</a></li>
+</ul>
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Data Serialization</a><ul>
+<li><a class="reference internal" href="#what-is-data-serialization">What is data serialization?</a></li>
+<li><a class="reference internal" href="#flat-vs-nested-data">Flat vs. Nested data</a></li>
+<li><a class="reference internal" href="#serializing-text">Serializing Text</a><ul>
+<li><a class="reference internal" href="#simple-file-flat-data">Simple file (flat data)</a><ul>
+<li><a class="reference internal" href="#repr">repr</a></li>
+<li><a class="reference internal" href="#ast-literal-eval">ast.literal_eval</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#csv-file-flat-data">CSV file (flat data)</a></li>
+<li><a class="reference internal" href="#yaml-nested-data">YAML (nested data)</a></li>
+<li><a class="reference internal" href="#json-file-nested-data">JSON file (nested data)</a></li>
+<li><a class="reference internal" href="#xml-nested-data">XML (nested data)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#binary">Binary</a><ul>
+<li><a class="reference internal" href="#numpy-array-flat-data">NumPy Array (flat data)</a></li>
+<li><a class="reference internal" href="#pickle-nested-data">Pickle (nested data)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#protobuf">Protobuf</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="imaging.html" title="上一章">Image Manipulation</a></li>
+      <li>Next: <a href="xml.html" title="下一章">XML parsing</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><!-- Alabaster (krTheme++) Hacks -->
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+  <div style="text-align: center;" id="waldo-tag-2171"></div>
+  <p>&copy;2011-2021 <a href="https://www.kennethreitz.org/projects">Kenneth Reitz</a> &amp; <a href="https://realpython.com">Real Python</a>. <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</a></p>
+</div>
+
+  </body>
+</html>

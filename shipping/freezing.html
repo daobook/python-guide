@@ -1,0 +1,500 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Freezing Your Code &#8212; The Hitchhiker&#39;s Guide to Python</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Introduction" href="../intro/duction.html" />
+    <link rel="prev" title="Packaging Your Code" href="packaging.html" />
+  
+
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    div.body {
+      min-width: initial;
+      max-width: initial;
+    }
+  </style>
+
+  
+  <link rel="canonical" href="https://docs.python-guide.org/shipping/freezing/"/>
+  <meta property="og:url" content="https://docs.python-guide.org/shipping/freezing">
+  
+
+  <link rel="icon" type="image/png" href="https://media.readthedocs.org/images/favicon.png">
+
+  <meta name="google-site-verification" content="013PxE2_8KX9jdUSC5gr8QsfdxTXr1mFgmD9zplp5II" />
+
+  <meta name="twitter:card" content="summary">
+  <meta property="twitter:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:title" content="Freezing Your Code &#8212; The Hitchhiker&#39;s Guide to Python">
+  <meta property="og:type" content="article">
+  
+  <meta property="og:description" content="">
+
+  <script>window.rp_prop_id = '29182759436';</script>
+  <script src="https://srv.realpython.net/tag.js" async></script>
+
+  <script src="https://d31vxm9ubutrmw.cloudfront.net/static/js/2169.js"></script>
+
+  
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37242602-11', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+  </head><body>
+
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            <div style="display:block;position:relative; margin-bottom: 1em;">
+              <div style="display:block;width:100%;padding-top:12.5%;"></div>
+              <div class="rpad" data-unit="8x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+            </div>
+            
+  <div class="section" id="freezing-your-code">
+<span id="freezing-your-code-ref"></span><h1>Freezing Your Code<a class="headerlink" href="#freezing-your-code" title="永久链接至标题">¶</a></h1>
+<img alt="../_images/33907151034_e0a9e53402_k_d.jpg" src="../_images/33907151034_e0a9e53402_k_d.jpg" />
+<p>“Freezing” your code is creating a single-file executable file to distribute
+to end-users, that contains all of your application code as well as the
+Python interpreter.</p>
+<p>Applications such as ‘Dropbox’, ‘Eve Online’,  ‘Civilization IV’, and
+BitTorrent clients do this.</p>
+<p>The advantage of distributing this way is that your application will “just work”,
+even if the user doesn’t already have the required version of Python (or any)
+installed. On Windows, and even on many Linux distributions and OS X, the right
+version of Python will not already be installed.</p>
+<p>Besides, end-user software should always be in an executable format. Files
+ending in <code class="docutils literal notranslate"><span class="pre">.py</span></code> are for software engineers and system administrators.</p>
+<p>One disadvantage of freezing is that it will increase the size of your
+distribution by about 2–12 MB. Also, you will be responsible for shipping
+updated versions of your application when security vulnerabilities to
+Python are patched.</p>
+<div class="section" id="alternatives-to-freezing">
+<h2>Alternatives to Freezing<a class="headerlink" href="#alternatives-to-freezing" title="永久链接至标题">¶</a></h2>
+<p><a class="reference internal" href="packaging.html#packaging-your-code-ref"><span class="std std-ref">Packaging your code</span></a> is for distributing
+libraries or tools to other developers.</p>
+<p>On Linux, an alternative to freezing is to
+<a class="reference internal" href="packaging.html#packaging-for-linux-distributions-ref"><span class="std std-ref">create a Linux distro package</span></a>
+(e.g. .deb files for Debian or Ubuntu, or .rpm files for Red Hat and SuSE.)</p>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">待处理</p>
+<p class="last">Fill in “Freezing Your Code” stub</p>
+</div>
+</div>
+<div class="section" id="comparison-of-freezing-tools">
+<h2>Comparison of Freezing Tools<a class="headerlink" href="#comparison-of-freezing-tools" title="永久链接至标题">¶</a></h2>
+<p>Date of this writing: Oct 5, 2019
+Solutions and platforms/features supported:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="6%" />
+<col width="4%" />
+<col width="3%" />
+<col width="7%" />
+<col width="6%" />
+<col width="11%" />
+<col width="12%" />
+<col width="3%" />
+<col width="18%" />
+<col width="18%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Solution</th>
+<th class="head">Windows</th>
+<th class="head">Linux</th>
+<th class="head">OS X</th>
+<th class="head">Python 3</th>
+<th class="head">License</th>
+<th class="head">One-file mode</th>
+<th class="head">Zipfile import</th>
+<th class="head">Eggs</th>
+<th class="head">pkg_resources support</th>
+<th class="head">Latest release date</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>bbFreeze</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+<td>MIT</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>Jan 20, 2014</td>
+</tr>
+<tr class="row-odd"><td>py2exe</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+<td>yes</td>
+<td>MIT</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+<td>Oct 21, 2014</td>
+</tr>
+<tr class="row-even"><td>pyInstaller</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>GPL</td>
+<td>yes</td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+<td>Jul 9, 2019</td>
+</tr>
+<tr class="row-odd"><td>cx_Freeze</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>PSF</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+<td>Aug 29, 2019</td>
+</tr>
+<tr class="row-even"><td>py2app</td>
+<td>no</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+<td>MIT</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>Mar 25, 2019</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p class="last">Freezing Python code on Linux into a Windows executable was only once
+supported in PyInstaller <a class="reference external" href="https://stackoverflow.com/questions/2950971/cross-compiling-a-python-script-on-linux-into-a-windows-executable#comment11890276_2951046">and later dropped</a>.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p class="last">All solutions need a Microsoft Visual C++ to be installed on the target machine, except py2app.
+Only PyInstaller makes a self-executable exe that bundles the appropriate DLL when
+passing <code class="docutils literal notranslate"><span class="pre">--onefile</span></code> to <code class="file docutils literal notranslate"><span class="pre">Configure.py</span></code>.</p>
+</div>
+</div>
+<div class="section" id="windows">
+<h2>Windows<a class="headerlink" href="#windows" title="永久链接至标题">¶</a></h2>
+<div class="section" id="bbfreeze">
+<h3>bbFreeze<a class="headerlink" href="#bbfreeze" title="永久链接至标题">¶</a></h3>
+<p>Prerequisite is to install <a class="reference internal" href="../starting/install/win.html#install-windows"><span class="std std-ref">Python, Setuptools and pywin32 dependency on Windows</span></a>.</p>
+<ol class="arabic simple">
+<li>Install <code class="code docutils literal notranslate"><span class="pre">bbfreeze</span></code>:</li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install bbfreeze
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>Write most basic <code class="file docutils literal notranslate"><span class="pre">bb_setup.py</span></code></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bbfreeze</span> <span class="kn">import</span> <span class="n">Freezer</span>
+
+<span class="n">freezer</span> <span class="o">=</span> <span class="n">Freezer</span><span class="p">(</span><span class="n">distdir</span><span class="o">=</span><span class="s1">&#39;dist&#39;</span><span class="p">)</span>
+<span class="n">freezer</span><span class="o">.</span><span class="n">addScript</span><span class="p">(</span><span class="s1">&#39;foobar.py&#39;</span><span class="p">,</span> <span class="n">gui_only</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">freezer</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p>This will work for the most basic one file scripts. For more advanced freezing you will have to provide
+include and exclude paths like so:</p>
+<div class="last highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">freezer</span> <span class="o">=</span> <span class="n">Freezer</span><span class="p">(</span><span class="n">distdir</span><span class="o">=</span><span class="s1">&#39;dist&#39;</span><span class="p">,</span> <span class="n">includes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;my_code&#39;</span><span class="p">],</span> <span class="n">excludes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;docs&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<ol class="arabic simple" start="3">
+<li>(Optionally) include icon</li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">freezer</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="s1">&#39;my_awesome_icon.ico&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>4. Provide the Microsoft Visual C++ runtime DLL for the freezer. It might be possible to append your <code class="code docutils literal notranslate"><span class="pre">sys.path</span></code>
+with the Microsoft Visual Studio path but I find it easier to drop <code class="file docutils literal notranslate"><span class="pre">msvcp90.dll</span></code> in the same folder where your script
+resides.</p>
+<ol class="arabic simple" start="5">
+<li>Freeze!</li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python bb_setup.py
+</pre></div>
+</div>
+</div>
+<div class="section" id="py2exe">
+<h3>py2exe<a class="headerlink" href="#py2exe" title="永久链接至标题">¶</a></h3>
+<p>Prerequisite is to install <a class="reference internal" href="../starting/install/win.html#install-windows"><span class="std std-ref">Python on Windows</span></a>. The last release of py2exe is from the year 2014. There is not active development.</p>
+<ol class="arabic simple">
+<li>Download and install <a class="reference external" href="http://sourceforge.net/projects/py2exe/files/py2exe/">http://sourceforge.net/projects/py2exe/files/py2exe/</a></li>
+<li>Write <code class="file docutils literal notranslate"><span class="pre">setup.py</span></code> (<a class="reference external" href="http://www.py2exe.org/index.cgi/ListOfOptions">List of configuration options</a>):</li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">distutils.core</span> <span class="kn">import</span> <span class="n">setup</span>
+<span class="kn">import</span> <span class="nn">py2exe</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">windows</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;script&#39;</span><span class="p">:</span> <span class="s1">&#39;foobar.py&#39;</span><span class="p">}],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li>(Optionally) <a class="reference external" href="http://www.py2exe.org/index.cgi/CustomIcons">include icon</a></li>
+<li>(Optionally) <a class="reference external" href="https://stackoverflow.com/questions/112698/py2exe-generate-single-executable-file#113014">one-file mode</a></li>
+<li>Generate <code class="file docutils literal notranslate"><span class="pre">.exe</span></code> into <code class="file docutils literal notranslate"><span class="pre">dist</span></code> directory:</li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python setup.py py2exe
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li>Provide the Microsoft Visual C++ runtime DLL. Two options: <a class="reference external" href="https://www.microsoft.com/en-us/download/details.aspx?id=29">globally install dll on target machine</a> or <a class="reference external" href="http://www.py2exe.org/index.cgi/Tutorial#Step52">distribute dll alongside with .exe</a>.</li>
+</ol>
+</div>
+<div class="section" id="pyinstaller">
+<h3>PyInstaller<a class="headerlink" href="#pyinstaller" title="永久链接至标题">¶</a></h3>
+<p>Prerequisite is to have installed <a class="reference internal" href="../starting/install/win.html#install-windows"><span class="std std-ref">Python, Setuptools and pywin32 dependency on Windows</span></a>.</p>
+<ul class="simple">
+<li><a class="reference external" href="http://bojan-komazec.blogspot.com/2011/08/how-to-create-windows-executable-from.html">Most basic tutorial</a></li>
+<li><a class="reference external" href="https://pyinstaller.readthedocs.io/en/stable/">Manual</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="os-x">
+<h2>OS X<a class="headerlink" href="#os-x" title="永久链接至标题">¶</a></h2>
+<div class="section" id="py2app">
+<h3>py2app<a class="headerlink" href="#py2app" title="永久链接至标题">¶</a></h3>
+</div>
+<div class="section" id="id1">
+<h3>PyInstaller<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h3>
+<p>PyInstaller can be used to build Unix executables and windowed apps on Mac OS X 10.6 (Snow Leopard) or newer.</p>
+<p>To install PyInstaller, use pip:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install pyinstaller
+</pre></div>
+</div>
+<p>To create a standard Unix executable, from say <code class="code docutils literal notranslate"><span class="pre">script.py</span></code>, use:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pyinstaller script.py
+</pre></div>
+</div>
+<p>This creates:</p>
+<ul class="simple">
+<li>a <code class="code docutils literal notranslate"><span class="pre">script.spec</span></code> file, analogous to a <code class="code docutils literal notranslate"><span class="pre">make</span></code> file</li>
+<li>a <code class="code docutils literal notranslate"><span class="pre">build</span></code> folder, that holds some log files</li>
+<li>a <code class="code docutils literal notranslate"><span class="pre">dist</span></code> folder, that holds the main executable <code class="code docutils literal notranslate"><span class="pre">script</span></code>, and some dependent Python libraries</li>
+</ul>
+<p>all in the same folder as <code class="code docutils literal notranslate"><span class="pre">script.py</span></code>. PyInstaller puts all the Python libraries used in <code class="code docutils literal notranslate"><span class="pre">script.py</span></code> into the <code class="code docutils literal notranslate"><span class="pre">dist</span></code> folder, so when distributing the executable, distribute the whole <code class="code docutils literal notranslate"><span class="pre">dist</span></code> folder.</p>
+<p>The <code class="code docutils literal notranslate"><span class="pre">script.spec</span></code> file can be edited to <a class="reference external" href="http://pythonhosted.org/PyInstaller/#spec-file-operation">customise the build</a>, with options such as:</p>
+<ul class="simple">
+<li>bundling data files with the executable</li>
+<li>including run-time libraries (<code class="code docutils literal notranslate"><span class="pre">.dll</span></code> or <code class="code docutils literal notranslate"><span class="pre">.so</span></code> files) that PyInstaller can’t infer automatically</li>
+<li>adding Python run-time options to the executable</li>
+</ul>
+<p>Now <code class="code docutils literal notranslate"><span class="pre">script.spec</span></code> can be run with <code class="code docutils literal notranslate"><span class="pre">pyinstaller</span></code> (instead of using <code class="code docutils literal notranslate"><span class="pre">script.py</span></code> again):</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pyinstaller script.spec
+</pre></div>
+</div>
+<p>To create a standalone windowed OS X application, use the <code class="code docutils literal notranslate"><span class="pre">--windowed</span></code> option:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pyinstaller --windowed script.spec
+</pre></div>
+</div>
+<p>This creates a <code class="code docutils literal notranslate"><span class="pre">script.app</span></code> in the <code class="code docutils literal notranslate"><span class="pre">dist</span></code> folder. Make sure to use GUI packages in your Python code, like <a class="reference external" href="https://riverbankcomputing.com/software/pyqt/intro">PyQt</a> or <a class="reference external" href="http://wiki.qt.io/About-PySide">PySide</a>, to control the graphical parts of the app.</p>
+<p>There are several options in <code class="code docutils literal notranslate"><span class="pre">script.spec</span></code> related to Mac OS X app bundles <a class="reference external" href="http://pythonhosted.org/PyInstaller/spec-files.html#spec-file-options-for-a-mac-os-x-bundle">here</a>. For example, to specify an icon for the app, use the <code class="code docutils literal notranslate"><span class="pre">icon=\path\to\icon.icns</span></code> option.</p>
+</div>
+</div>
+<div class="section" id="linux">
+<h2>Linux<a class="headerlink" href="#linux" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id2">
+<h3>bbFreeze<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">bbFreeze will ONLY work in Python 2.x environment, since it’s no longer being maintained as stated by it’s former maintainer. If you’re interested in it, check the repository in <a class="reference external" href="https://github.com/schmir/bbfreeze">here</a>.</p>
+</div>
+<p>bbFreeze can be used with all distributions that has Python installed along with pip2 and/or easy_install.</p>
+<p>For pip2, use the following:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip2 install bbfreeze
+</pre></div>
+</div>
+<p>Or, for easy_install:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> easy_install bbfreeze
+</pre></div>
+</div>
+<p>With bbFreeze installed, you’re ready to freeze your applications.</p>
+<p>Let’s assume you have a script, say, “hello.py” and a module called “module.py” and you have a function in it that’s being used in your script.
+No need to worry, you can just ask to freeze the main entrypoint of your script and it should freeze entirely:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> bbfreeze script.py
+</pre></div>
+</div>
+<p>With this, it creates a folder called dist/, of which contains the executable of the script and required .so (shared objects) files linked against libraries used within the Python script.</p>
+<p>Alternatively, you can create a script that does the freezing for you. An API for the freezer is available from the library within:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bbfreeze</span> <span class="kn">import</span> <span class="n">Freezer</span>
+
+<span class="n">freezer</span> <span class="o">=</span> <span class="n">Freezer</span><span class="p">(</span><span class="n">distdir</span><span class="o">=</span><span class="s1">&#39;dist&#39;</span><span class="p">)</span>
+<span class="n">freezer</span><span class="o">.</span><span class="n">addScript</span><span class="p">(</span><span class="s1">&#39;script.py&#39;</span><span class="p">,</span> <span class="n">gui_only</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="c1"># Enable gui_only kwarg for app that uses GUI packages.</span>
+<span class="n">freezer</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>PyInstaller<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>PyInstaller can be used in a similar fashion as in OS X. The installation goes in the same manner as shown in the OS X section.</p>
+<p>Don’t forget to have dependencies such as Python and pip installed for usage.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/python-guide-logo.png" title="The Hitchhiker's Guide to Python"/>
+  </a>
+</p>
+
+<p style="margin-left:auto; margin-right: auto;"><iframe src="https://ghbtns.com/github-btn.html?user=realpython&repo=python-guide&type=watch&count=true&size=large" allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe></p>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<style>
+.algolia-autocomplete{
+  width: 100%;
+  height: 1.5em
+}
+.algolia-autocomplete a{
+  border-bottom: none !important;
+}
+#doc_search{
+  width: 100%;
+  height: 100%;
+}
+</style>
+<input id="doc_search" placeholder="Search the doc" autofocus/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" onload="docsearch({
+  apiKey: '512b0d6c0c8578bed7662f5279c2249c',
+  indexName: 'python-guide',
+  inputSelector: '#doc_search',
+  debug: false // Set debug to true if you want to inspect the dropdown
+})" async></script>
+
+<p>
+  This opinionated guide exists to provide both novice and expert Python developers a best practice handbook to the installation, configuration, and usage of Python on a daily basis.
+</p>
+
+<div style="display:block;position:relative;margin: 1em 0 1em 0;">
+  <div style="display:block;width:100%;padding-top:100%;"></div>
+  <div class="rpad" data-unit="1x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+</div>
+
+<h3>O'Reilly Book</h3>
+
+<p>This guide is now available in tangible book form!</p>
+
+<p><a href="/guide-book" target="_blank"><img style="max-width: 100%; text-align: center;" src="/_static/guide-book-cover.jpg" alt="Python Guide Book Cover"></a></p>
+
+<p>All proceeds are being directly donated to the <a href="https://djangogirls.org">DjangoGirls</a> organization.</p>
+
+<h3>Translations</h3>
+<ul>
+  <li><a href="https://docs.python-guide.org/">English</a></li>
+  <li><a href="https://python-guide-fr.readthedocs.io/fr/latest/">French</a></li>
+  <li><a href="https://pythonguidecn.readthedocs.io/zh/latest/">Chinese</a></li>
+  <li><a href="http://python-guideja.readthedocs.io/ja/latest/">Japanese</a></li>
+  <li><a href="https://python-guide-kr.readthedocs.io/ko/latest/">Korean</a></li>
+  <li><a href="http://python-guide-fil.readthedocs.io/en/latest/">Filipino</a></li>
+  <li><a href="http://python-guide-pt-br.readthedocs.io/pt_BR/latest/">Brazilian Portuguese</a></li>
+</ul>
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Freezing Your Code</a><ul>
+<li><a class="reference internal" href="#alternatives-to-freezing">Alternatives to Freezing</a></li>
+<li><a class="reference internal" href="#comparison-of-freezing-tools">Comparison of Freezing Tools</a></li>
+<li><a class="reference internal" href="#windows">Windows</a><ul>
+<li><a class="reference internal" href="#bbfreeze">bbFreeze</a></li>
+<li><a class="reference internal" href="#py2exe">py2exe</a></li>
+<li><a class="reference internal" href="#pyinstaller">PyInstaller</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#os-x">OS X</a><ul>
+<li><a class="reference internal" href="#py2app">py2app</a></li>
+<li><a class="reference internal" href="#id1">PyInstaller</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#linux">Linux</a><ul>
+<li><a class="reference internal" href="#id2">bbFreeze</a></li>
+<li><a class="reference internal" href="#id4">PyInstaller</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="packaging.html" title="上一章">Packaging Your Code</a></li>
+      <li>Next: <a href="../intro/duction.html" title="下一章">Introduction</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><!-- Alabaster (krTheme++) Hacks -->
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+  <div style="text-align: center;" id="waldo-tag-2171"></div>
+  <p>&copy;2011-2021 <a href="https://www.kennethreitz.org/projects">Kenneth Reitz</a> &amp; <a href="https://realpython.com">Real Python</a>. <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</a></p>
+</div>
+
+  </body>
+</html>

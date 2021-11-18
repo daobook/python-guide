@@ -1,0 +1,434 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Testing Your Code &#8212; The Hitchhiker&#39;s Guide to Python</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Logging" href="logging.html" />
+    <link rel="prev" title="Documentation" href="documentation.html" />
+  
+
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    div.body {
+      min-width: initial;
+      max-width: initial;
+    }
+  </style>
+
+  
+  <link rel="canonical" href="https://docs.python-guide.org/writing/tests/"/>
+  <meta property="og:url" content="https://docs.python-guide.org/writing/tests">
+  
+
+  <link rel="icon" type="image/png" href="https://media.readthedocs.org/images/favicon.png">
+
+  <meta name="google-site-verification" content="013PxE2_8KX9jdUSC5gr8QsfdxTXr1mFgmD9zplp5II" />
+
+  <meta name="twitter:card" content="summary">
+  <meta property="twitter:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:title" content="Testing Your Code &#8212; The Hitchhiker&#39;s Guide to Python">
+  <meta property="og:type" content="article">
+  
+  <meta property="og:description" content="">
+
+  <script>window.rp_prop_id = '29182759436';</script>
+  <script src="https://srv.realpython.net/tag.js" async></script>
+
+  <script src="https://d31vxm9ubutrmw.cloudfront.net/static/js/2169.js"></script>
+
+  
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37242602-11', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+  </head><body>
+
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            <div style="display:block;position:relative; margin-bottom: 1em;">
+              <div style="display:block;width:100%;padding-top:12.5%;"></div>
+              <div class="rpad" data-unit="8x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+            </div>
+            
+  <div class="section" id="testing-your-code">
+<h1>Testing Your Code<a class="headerlink" href="#testing-your-code" title="永久链接至标题">¶</a></h1>
+<img alt="../_images/34435687940_8f73fc1fa6_k_d.jpg" src="../_images/34435687940_8f73fc1fa6_k_d.jpg" />
+<p>Testing your code is very important.</p>
+<p>Getting used to writing testing code and running this code in parallel is now
+considered a good habit. Used wisely, this method helps to define your
+code’s intent more precisely and have a more decoupled architecture.</p>
+<p>Some general rules of testing:</p>
+<ul class="simple">
+<li>A testing unit should focus on one tiny bit of functionality and prove it
+correct.</li>
+<li>Each test unit must be fully independent. Each test must be able to run
+alone, and also within the test suite, regardless of the order that they are
+called. The implication of this rule is that each test must be loaded with
+a fresh dataset and may have to do some cleanup afterwards. This is
+usually handled by <code class="xref py py-meth docutils literal notranslate"><span class="pre">setUp()</span></code> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">tearDown()</span></code> methods.</li>
+<li>Try hard to make tests that run fast. If one single test needs more than a
+few milliseconds to run, development will be slowed down or the tests will
+not be run as often as is desirable. In some cases, tests can’t be fast
+because they need a complex data structure to work on, and this data structure
+must be loaded every time the test runs. Keep these heavier tests in a
+separate test suite that is run by some scheduled task, and run all other
+tests as often as needed.</li>
+<li>Learn your tools and learn how to run a single test or a test case. Then,
+when developing a function inside a module, run this function’s tests
+frequently, ideally automatically when you save the code.</li>
+<li>Always run the full test suite before a coding session, and run it again
+after. This will give you more confidence that you did not break anything
+in the rest of the code.</li>
+<li>It is a good idea to implement a hook that runs all tests before pushing
+code to a shared repository.</li>
+<li>If you are in the middle of a development session and have to interrupt
+your work, it is a good idea to write a broken unit test about what you
+want to develop next. When coming back to work, you will have a pointer
+to where you were and get back on track faster.</li>
+<li>The first step when you are debugging your code is to write a new test
+pinpointing the bug. While it is not always possible to do, those bug
+catching tests are among the most valuable pieces of code in your project.</li>
+<li>Use long and descriptive names for testing functions. The style guide here
+is slightly different than that of running code, where short names are
+often preferred. The reason is testing functions are never called explicitly.
+<code class="docutils literal notranslate"><span class="pre">square()</span></code> or even <code class="docutils literal notranslate"><span class="pre">sqr()</span></code> is ok in running code, but in testing code you
+would have names such as <code class="docutils literal notranslate"><span class="pre">test_square_of_number_2()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">test_square_negative_number()</span></code>. These function names are displayed when
+a test fails, and should be as descriptive as possible.</li>
+<li>When something goes wrong or has to be changed, and if your code has a
+good set of tests, you or other maintainers will rely largely on the
+testing suite to fix the problem or modify a given behavior. Therefore
+the testing code will be read as much as or even more than the running
+code. A unit test whose purpose is unclear is not very helpful in this
+case.</li>
+<li>Another use of the testing code is as an introduction to new developers. When
+someone will have to work on the code base, running and reading the related
+testing code is often the best thing that they can do to start. They will
+or should discover the hot spots, where most difficulties arise, and the
+corner cases. If they have to add some functionality, the first step should
+be to add a test to ensure that the new functionality is not already a
+working path that has not been plugged into the interface.</li>
+</ul>
+<div class="section" id="the-basics">
+<h2>The Basics<a class="headerlink" href="#the-basics" title="永久链接至标题">¶</a></h2>
+<div class="section" id="unittest">
+<h3>unittest<a class="headerlink" href="#unittest" title="永久链接至标题">¶</a></h3>
+<p><a class="reference external" href="https://docs.python.org/3/library/unittest.html#module-unittest" title="(在 Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code></a> is the batteries-included test module in the Python standard
+library. Its API will be familiar to anyone who has used any of the
+JUnit/nUnit/CppUnit series of tools.</p>
+<p>Creating test cases is accomplished by subclassing <a class="reference external" href="https://docs.python.org/3/library/unittest.html#unittest.TestCase" title="(在 Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.TestCase</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="k">class</span> <span class="nc">MyTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">fun</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As of Python 2.7 unittest also includes its own test discovery mechanisms.</p>
+<blockquote>
+<div><a class="reference external" href="http://docs.python.org/library/unittest.html">unittest in the standard library documentation</a></div></blockquote>
+</div>
+<div class="section" id="doctest">
+<h3>Doctest<a class="headerlink" href="#doctest" title="永久链接至标题">¶</a></h3>
+<p>The <a class="reference external" href="https://docs.python.org/3/library/doctest.html#module-doctest" title="(在 Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">doctest</span></code></a> module searches for pieces of text that look like interactive
+Python sessions in docstrings, and then executes those sessions to verify that
+they work exactly as shown.</p>
+<p>Doctests have a different use case than proper unit tests: they are usually
+less detailed and don’t catch special cases or obscure regression bugs. They
+are useful as an expressive documentation of the main use cases of a module and
+its components. However, doctests should run automatically each time the full
+test suite runs.</p>
+<p>A simple doctest in a function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the square of x.</span>
+
+<span class="sd">    &gt;&gt;&gt; square(2)</span>
+<span class="sd">    4</span>
+<span class="sd">    &gt;&gt;&gt; square(-2)</span>
+<span class="sd">    4</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>When running this module from the command line as in <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">module.py</span></code>, the
+doctests will run and complain if anything is not behaving as described in the
+docstrings.</p>
+</div>
+</div>
+<div class="section" id="tools">
+<h2>Tools<a class="headerlink" href="#tools" title="永久链接至标题">¶</a></h2>
+<div class="section" id="py-test">
+<h3>py.test<a class="headerlink" href="#py-test" title="永久链接至标题">¶</a></h3>
+<p>py.test is a no-boilerplate alternative to Python’s standard unittest module.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install pytest
+</pre></div>
+</div>
+<p>Despite being a fully-featured and extensible test tool, it boasts a simple
+syntax. Creating a test suite is as easy as writing a module with a couple of
+functions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># content of test_sample.py</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="k">def</span> <span class="nf">test_answer</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">func</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<p>and then running the <cite>py.test</cite> command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> py.test
+<span class="go">=========================== test session starts ============================</span>
+<span class="go">platform darwin -- Python 2.7.1 -- pytest-2.2.1</span>
+<span class="go">collecting ... collected 1 items</span>
+
+<span class="go">test_sample.py F</span>
+
+<span class="go">================================= FAILURES =================================</span>
+<span class="go">_______________________________ test_answer ________________________________</span>
+
+<span class="go">    def test_answer():</span>
+<span class="gp">&gt;</span>       assert func<span class="o">(</span><span class="m">3</span><span class="o">)</span> <span class="o">==</span> <span class="m">5</span>
+<span class="go">E       assert 4 == 5</span>
+<span class="go">E        +  where 4 = func(3)</span>
+
+<span class="go">test_sample.py:5: AssertionError</span>
+<span class="go">========================= 1 failed in 0.02 seconds =========================</span>
+</pre></div>
+</div>
+<p>is far less work than would be required for the equivalent functionality with
+the unittest module!</p>
+<blockquote>
+<div><a class="reference external" href="https://docs.pytest.org/en/latest/">py.test</a></div></blockquote>
+</div>
+<div class="section" id="hypothesis">
+<h3>Hypothesis<a class="headerlink" href="#hypothesis" title="永久链接至标题">¶</a></h3>
+<p>Hypothesis is a library which lets you write tests that are parameterized by
+a source of examples.  It then generates simple and comprehensible examples
+that make your tests fail, letting you find more bugs with less work.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install hypothesis
+</pre></div>
+</div>
+<p>For example, testing lists of floats will try many examples, but report the
+minimal example of each bug (distinguished exception type and location):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@given</span><span class="p">(</span><span class="n">lists</span><span class="p">(</span><span class="n">floats</span><span class="p">(</span><span class="n">allow_nan</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">allow_infinity</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span> <span class="n">min_size</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">test_mean</span><span class="p">(</span><span class="n">xs</span><span class="p">):</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">min</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">mean</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">max</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Falsifying example: test_mean(
+    xs=[1.7976321109618856e+308, 6.102390043022755e+303]
+)
+</pre></div>
+</div>
+<p>Hypothesis is practical as well as very powerful and will often find bugs
+that escaped all other forms of testing.  It integrates well with py.test,
+and has a strong focus on usability in both simple and advanced scenarios.</p>
+<blockquote>
+<div><a class="reference external" href="https://hypothesis.readthedocs.io/en/latest/">hypothesis</a></div></blockquote>
+</div>
+<div class="section" id="tox">
+<h3>tox<a class="headerlink" href="#tox" title="永久链接至标题">¶</a></h3>
+<p>tox is a tool for automating test environment management and testing against
+multiple interpreter configurations.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install tox
+</pre></div>
+</div>
+<p>tox allows you to configure complicated multi-parameter test matrices via a
+simple INI-style configuration file.</p>
+<blockquote>
+<div><a class="reference external" href="https://tox.readthedocs.io/en/latest/">tox</a></div></blockquote>
+</div>
+<div class="section" id="mock">
+<h3>mock<a class="headerlink" href="#mock" title="永久链接至标题">¶</a></h3>
+<p><a class="reference external" href="https://docs.python.org/3/library/unittest.mock.html#module-unittest.mock" title="(在 Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code></a> is a library for testing in Python. As of Python 3.3, it is
+available in the
+<a class="reference external" href="https://docs.python.org/dev/library/unittest.mock">standard library</a>.</p>
+<p>For older versions of Python:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install mock
+</pre></div>
+</div>
+<p>It allows you to replace parts of your system under test with mock objects and
+make assertions about how they have been used.</p>
+<p>For example, you can monkey-patch a method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">MagicMock</span>
+<span class="n">thing</span> <span class="o">=</span> <span class="n">ProductionClass</span><span class="p">()</span>
+<span class="n">thing</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">thing</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+
+<span class="n">thing</span><span class="o">.</span><span class="n">method</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To mock classes or objects in a module under test, use the <code class="docutils literal notranslate"><span class="pre">patch</span></code> decorator.
+In the example below, an external search system is replaced with a mock that
+always returns the same result (but only for the duration of the test).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mock_search</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">MockSearchQuerySet</span><span class="p">(</span><span class="n">SearchQuerySet</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">iter</span><span class="p">([</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="s2">&quot;baz&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">MockSearchQuerySet</span><span class="p">()</span>
+
+<span class="c1"># SearchForm here refers to the imported class reference in myapp,</span>
+<span class="c1"># not where the SearchForm class itself is imported from</span>
+<span class="nd">@mock.patch</span><span class="p">(</span><span class="s1">&#39;myapp.SearchForm.search&#39;</span><span class="p">,</span> <span class="n">mock_search</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_new_watchlist_activities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># get_search_results runs a search and iterates over the result</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">myapp</span><span class="o">.</span><span class="n">get_search_results</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="s2">&quot;fish&quot;</span><span class="p">)),</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Mock has many other ways with which you can configure and control its behaviour.</p>
+<blockquote>
+<div><a class="reference external" href="http://www.voidspace.org.uk/python/mock/">mock</a></div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/python-guide-logo.png" title="The Hitchhiker's Guide to Python"/>
+  </a>
+</p>
+
+<p style="margin-left:auto; margin-right: auto;"><iframe src="https://ghbtns.com/github-btn.html?user=realpython&repo=python-guide&type=watch&count=true&size=large" allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe></p>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<style>
+.algolia-autocomplete{
+  width: 100%;
+  height: 1.5em
+}
+.algolia-autocomplete a{
+  border-bottom: none !important;
+}
+#doc_search{
+  width: 100%;
+  height: 100%;
+}
+</style>
+<input id="doc_search" placeholder="Search the doc" autofocus/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" onload="docsearch({
+  apiKey: '512b0d6c0c8578bed7662f5279c2249c',
+  indexName: 'python-guide',
+  inputSelector: '#doc_search',
+  debug: false // Set debug to true if you want to inspect the dropdown
+})" async></script>
+
+<p>
+  This opinionated guide exists to provide both novice and expert Python developers a best practice handbook to the installation, configuration, and usage of Python on a daily basis.
+</p>
+
+<div style="display:block;position:relative;margin: 1em 0 1em 0;">
+  <div style="display:block;width:100%;padding-top:100%;"></div>
+  <div class="rpad" data-unit="1x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+</div>
+
+<h3>O'Reilly Book</h3>
+
+<p>This guide is now available in tangible book form!</p>
+
+<p><a href="/guide-book" target="_blank"><img style="max-width: 100%; text-align: center;" src="/_static/guide-book-cover.jpg" alt="Python Guide Book Cover"></a></p>
+
+<p>All proceeds are being directly donated to the <a href="https://djangogirls.org">DjangoGirls</a> organization.</p>
+
+<h3>Translations</h3>
+<ul>
+  <li><a href="https://docs.python-guide.org/">English</a></li>
+  <li><a href="https://python-guide-fr.readthedocs.io/fr/latest/">French</a></li>
+  <li><a href="https://pythonguidecn.readthedocs.io/zh/latest/">Chinese</a></li>
+  <li><a href="http://python-guideja.readthedocs.io/ja/latest/">Japanese</a></li>
+  <li><a href="https://python-guide-kr.readthedocs.io/ko/latest/">Korean</a></li>
+  <li><a href="http://python-guide-fil.readthedocs.io/en/latest/">Filipino</a></li>
+  <li><a href="http://python-guide-pt-br.readthedocs.io/pt_BR/latest/">Brazilian Portuguese</a></li>
+</ul>
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Testing Your Code</a><ul>
+<li><a class="reference internal" href="#the-basics">The Basics</a><ul>
+<li><a class="reference internal" href="#unittest">unittest</a></li>
+<li><a class="reference internal" href="#doctest">Doctest</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tools">Tools</a><ul>
+<li><a class="reference internal" href="#py-test">py.test</a></li>
+<li><a class="reference internal" href="#hypothesis">Hypothesis</a></li>
+<li><a class="reference internal" href="#tox">tox</a></li>
+<li><a class="reference internal" href="#mock">mock</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="documentation.html" title="上一章">Documentation</a></li>
+      <li>Next: <a href="logging.html" title="下一章">Logging</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><!-- Alabaster (krTheme++) Hacks -->
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+  <div style="text-align: center;" id="waldo-tag-2171"></div>
+  <p>&copy;2011-2021 <a href="https://www.kennethreitz.org/projects">Kenneth Reitz</a> &amp; <a href="https://realpython.com">Real Python</a>. <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</a></p>
+</div>
+
+  </body>
+</html>

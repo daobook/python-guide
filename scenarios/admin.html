@@ -1,0 +1,525 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Systems Administration &#8212; The Hitchhiker&#39;s Guide to Python</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Continuous Integration" href="ci.html" />
+    <link rel="prev" title="Networking" href="network.html" />
+  
+
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    div.body {
+      min-width: initial;
+      max-width: initial;
+    }
+  </style>
+
+  
+  <link rel="canonical" href="https://docs.python-guide.org/scenarios/admin/"/>
+  <meta property="og:url" content="https://docs.python-guide.org/scenarios/admin">
+  
+
+  <link rel="icon" type="image/png" href="https://media.readthedocs.org/images/favicon.png">
+
+  <meta name="google-site-verification" content="013PxE2_8KX9jdUSC5gr8QsfdxTXr1mFgmD9zplp5II" />
+
+  <meta name="twitter:card" content="summary">
+  <meta property="twitter:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:title" content="Systems Administration &#8212; The Hitchhiker&#39;s Guide to Python">
+  <meta property="og:type" content="article">
+  
+  <meta property="og:description" content="">
+
+  <script>window.rp_prop_id = '29182759436';</script>
+  <script src="https://srv.realpython.net/tag.js" async></script>
+
+  <script src="https://d31vxm9ubutrmw.cloudfront.net/static/js/2169.js"></script>
+
+  
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37242602-11', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+  </head><body>
+
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            <div style="display:block;position:relative; margin-bottom: 1em;">
+              <div style="display:block;width:100%;padding-top:12.5%;"></div>
+              <div class="rpad" data-unit="8x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+            </div>
+            
+  <div class="section" id="systems-administration">
+<h1>Systems Administration<a class="headerlink" href="#systems-administration" title="永久链接至标题">¶</a></h1>
+<img alt="../_images/34435690580_3afec7d4cd_k_d.jpg" src="../_images/34435690580_3afec7d4cd_k_d.jpg" />
+<div class="section" id="fabric">
+<h2>Fabric<a class="headerlink" href="#fabric" title="永久链接至标题">¶</a></h2>
+<p><a class="reference external" href="http://docs.fabfile.org">Fabric</a> is a library for simplifying system
+administration tasks. While Chef and Puppet tend to focus on managing servers
+and system libraries, Fabric is more focused on application level tasks such
+as deployment.</p>
+<p>Install Fabric:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install fabric
+</pre></div>
+</div>
+<p>The following code will create two tasks that we can use: <code class="docutils literal notranslate"><span class="pre">memory_usage</span></code> and
+<code class="docutils literal notranslate"><span class="pre">deploy</span></code>. The former will output the memory usage on each machine. The
+latter will SSH into each server, cd to our project directory, activate the
+virtual environment, pull the newest codebase, and restart the application
+server.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fabric.api</span> <span class="kn">import</span> <span class="n">cd</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">task</span>
+
+<span class="n">env</span><span class="o">.</span><span class="n">hosts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;my_server1&#39;</span><span class="p">,</span> <span class="s1">&#39;my_server2&#39;</span><span class="p">]</span>
+
+<span class="nd">@task</span>
+<span class="k">def</span> <span class="nf">memory_usage</span><span class="p">():</span>
+    <span class="n">run</span><span class="p">(</span><span class="s1">&#39;free -m&#39;</span><span class="p">)</span>
+
+<span class="nd">@task</span>
+<span class="k">def</span> <span class="nf">deploy</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">cd</span><span class="p">(</span><span class="s1">&#39;/var/www/project-env/project&#39;</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">prefix</span><span class="p">(</span><span class="s1">&#39;. ../bin/activate&#39;</span><span class="p">):</span>
+            <span class="n">run</span><span class="p">(</span><span class="s1">&#39;git pull&#39;</span><span class="p">)</span>
+            <span class="n">run</span><span class="p">(</span><span class="s1">&#39;touch app.wsgi&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>With the previous code saved in a file named <code class="file docutils literal notranslate"><span class="pre">fabfile.py</span></code>, we can check
+memory usage with:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> fab memory_usage
+<span class="go">[my_server1] Executing task &#39;memory&#39;</span>
+<span class="go">[my_server1] run: free -m</span>
+<span class="go">[my_server1] out:              total     used     free   shared  buffers   cached</span>
+<span class="go">[my_server1] out: Mem:          6964     1897     5067        0      166      222</span>
+<span class="go">[my_server1] out: -/+ buffers/cache:     1509     5455</span>
+<span class="go">[my_server1] out: Swap:            0        0        0</span>
+
+<span class="go">[my_server2] Executing task &#39;memory&#39;</span>
+<span class="go">[my_server2] run: free -m</span>
+<span class="go">[my_server2] out:              total     used     free   shared  buffers   cached</span>
+<span class="go">[my_server2] out: Mem:          1666      902      764        0      180      572</span>
+<span class="go">[my_server2] out: -/+ buffers/cache:      148     1517</span>
+<span class="go">[my_server2] out: Swap:          895        1      894</span>
+</pre></div>
+</div>
+<p>and we can deploy with:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> fab deploy
+</pre></div>
+</div>
+<p>Additional features include parallel execution, interaction with remote
+programs, and host grouping.</p>
+<blockquote>
+<div><a class="reference external" href="http://docs.fabfile.org">Fabric Documentation</a></div></blockquote>
+</div>
+<div class="section" id="salt">
+<h2>Salt<a class="headerlink" href="#salt" title="永久链接至标题">¶</a></h2>
+<p><a class="reference external" href="http://saltstack.org/">Salt</a> is an open source infrastructure management
+tool.  It supports remote command execution from a central point (master host)
+to multiple hosts (minions). It also supports system states which can be used
+to configure multiple servers using simple template files.</p>
+<p>Salt supports Python versions 2.6 and 2.7 and can be installed via pip:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install salt
+</pre></div>
+</div>
+<p>After configuring a master server and any number of minion hosts, we can run
+arbitrary shell commands or use pre-built modules of complex commands on our
+minions.</p>
+<p>The following command lists all available minion hosts, using the ping module.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> salt <span class="s1">&#39;*&#39;</span> test.ping
+</pre></div>
+</div>
+<p>The host filtering is accomplished by matching the minion id
+or using the grains system. The
+<a class="reference external" href="http://docs.saltstack.org/en/latest/topics/targeting/grains.html">grains</a>
+system uses static host information like the operating system version or the
+CPU architecture to provide a host taxonomy for the Salt modules.</p>
+<p>The following command lists all available minions running CentOS using the
+grains system:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> salt -G <span class="s1">&#39;os:CentOS&#39;</span> test.ping
+</pre></div>
+</div>
+<p>Salt also provides a state system. States can be used to configure the minion
+hosts.</p>
+<p>For example, when a minion host is ordered to read the following state file,
+it will install and start the Apache server:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">apache</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">pkg</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">installed</span>
+  <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">running</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">enable</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">require</span><span class="p p-Indicator">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pkg</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">apache</span>
+</pre></div>
+</div>
+<p>State files can be written using YAML, the Jinja2 template system, or pure Python.</p>
+<blockquote>
+<div><a class="reference external" href="http://docs.saltstack.com">Salt Documentation</a></div></blockquote>
+</div>
+<div class="section" id="psutil">
+<h2>Psutil<a class="headerlink" href="#psutil" title="永久链接至标题">¶</a></h2>
+<p><a class="reference external" href="https://github.com/giampaolo/psutil/">Psutil</a> is an interface to different
+system information (e.g. CPU, memory, disks, network, users, and processes).</p>
+<p>Here is an example to be aware of some server overload. If any of the
+tests (net, CPU) fail, it will send an email.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Functions to get system values:</span>
+<span class="kn">from</span> <span class="nn">psutil</span> <span class="kn">import</span> <span class="n">cpu_percent</span><span class="p">,</span> <span class="n">net_io_counters</span>
+<span class="c1"># Functions to take a break:</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span class="c1"># Package for email services:</span>
+<span class="kn">import</span> <span class="nn">smtplib</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="n">MAX_NET_USAGE</span> <span class="o">=</span> <span class="mi">400000</span>
+<span class="n">MAX_ATTACKS</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">attack</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">attack</span> <span class="o">&lt;=</span> <span class="n">MAX_ATTACKS</span><span class="p">:</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">counter</span> <span class="o">=</span> <span class="n">counter</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="c1"># Check the cpu usage</span>
+    <span class="k">if</span> <span class="n">cpu_percent</span><span class="p">(</span><span class="n">interval</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">70</span><span class="p">:</span>
+        <span class="n">attack</span> <span class="o">=</span> <span class="n">attack</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="c1"># Check the net usage</span>
+    <span class="n">neti1</span> <span class="o">=</span> <span class="n">net_io_counters</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">neto1</span> <span class="o">=</span> <span class="n">net_io_counters</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">neti2</span> <span class="o">=</span> <span class="n">net_io_counters</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">neto2</span> <span class="o">=</span> <span class="n">net_io_counters</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># Calculate the bytes per second</span>
+    <span class="n">net</span> <span class="o">=</span> <span class="p">((</span><span class="n">neti2</span><span class="o">+</span><span class="n">neto2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">neti1</span><span class="o">+</span><span class="n">neto1</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span>
+    <span class="k">if</span> <span class="n">net</span> <span class="o">&gt;</span> <span class="n">MAX_NET_USAGE</span><span class="p">:</span>
+        <span class="n">attack</span> <span class="o">=</span> <span class="n">attack</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">counter</span> <span class="o">&gt;</span> <span class="mi">25</span><span class="p">:</span>
+        <span class="n">attack</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="c1"># Write a very important email if attack is higher than 4</span>
+<span class="n">TO</span> <span class="o">=</span> <span class="s2">&quot;you@your_email.com&quot;</span>
+<span class="n">FROM</span> <span class="o">=</span> <span class="s2">&quot;webmaster@your_domain.com&quot;</span>
+<span class="n">SUBJECT</span> <span class="o">=</span> <span class="s2">&quot;Your domain is out of system resources!&quot;</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Go and fix your server!&quot;</span>
+<span class="n">BODY</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="s2">&quot;From: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="n">FROM</span><span class="p">,</span><span class="s2">&quot;To: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="n">TO</span><span class="p">,</span><span class="s2">&quot;Subject: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="n">SUBJECT</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">text</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">server</span> <span class="o">=</span> <span class="n">smtplib</span><span class="o">.</span><span class="n">SMTP</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">)</span>
+<span class="n">server</span><span class="o">.</span><span class="n">sendmail</span><span class="p">(</span><span class="n">FROM</span><span class="p">,</span> <span class="p">[</span><span class="n">TO</span><span class="p">],</span> <span class="n">BODY</span><span class="p">)</span>
+<span class="n">server</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>A full terminal application like a widely extended top which is based on
+psutil and with the ability of a client-server monitoring is
+<a class="reference external" href="https://github.com/nicolargo/glances/">glance</a>.</p>
+</div>
+<div class="section" id="ansible">
+<h2>Ansible<a class="headerlink" href="#ansible" title="永久链接至标题">¶</a></h2>
+<p><a class="reference external" href="http://ansible.com/">Ansible</a>  is an open source system automation tool.
+Its biggest advantage over Puppet or Chef is that it does not require an agent on
+the client machine. Playbooks are Ansible’s configuration, deployment, and
+orchestration language and are written in YAML with Jinja2 for templating.</p>
+<p>Ansible supports Python versions 2.6 and 2.7 and can be installed via pip:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install ansible
+</pre></div>
+</div>
+<p>Ansible requires an inventory file that describes the hosts to which it has
+access. Below is an example of a host and playbook that will ping all the
+hosts in the inventory file.</p>
+<p>Here is an example inventory file:
+<code class="file docutils literal notranslate"><span class="pre">hosts.yml</span></code></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">[</span><span class="nv">server_name</span><span class="p p-Indicator">]</span>
+<span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
+</pre></div>
+</div>
+<p>Here is an example playbook:
+<code class="file docutils literal notranslate"><span class="pre">ping.yml</span></code></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ping</span>
+      <span class="l l-Scalar l-Scalar-Plain">action</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ping</span>
+</pre></div>
+</div>
+<p>To run the playbook:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ansible-playbook ping.yml -i hosts.yml --ask-pass
+</pre></div>
+</div>
+<p>The Ansible playbook will ping all of the servers in the <code class="file docutils literal notranslate"><span class="pre">hosts.yml</span></code> file.
+You can also select groups of servers using Ansible. For more information
+about Ansible, read the <a class="reference external" href="http://docs.ansible.com/">Ansible Docs</a>.</p>
+<p><a class="reference external" href="https://serversforhackers.com/an-ansible-tutorial/">An Ansible tutorial</a> is also a
+great and detailed introduction to getting started with Ansible.</p>
+</div>
+<div class="section" id="chef">
+<h2>Chef<a class="headerlink" href="#chef" title="永久链接至标题">¶</a></h2>
+<p><a class="reference external" href="https://www.chef.io/chef/">Chef</a>  is a systems and cloud infrastructure automation
+framework that makes it easy to deploy servers and applications to any physical,
+virtual, or cloud location. In case this is your choice for configuration management,
+you will primarily use Ruby to write your infrastructure code.</p>
+<p>Chef clients run on every server that is part of your infrastructure and these regularly
+check with your Chef server to ensure your system is always aligned and represents the
+desired state. Since each individual server has its own distinct Chef client, each server
+configures itself and this distributed approach makes Chef a scalable automation platform.</p>
+<p>Chef works by using custom recipes (configuration elements), implemented in cookbooks. Cookbooks, which are basically
+packages for infrastructure choices, are usually stored in your Chef server.
+Read the <a class="reference external" href="https://www.digitalocean.com/community/tutorials/how-to-install-a-chef-server-workstation-and-client-on-ubuntu-vps-instances">DigitalOcean tutorial series</a>
+on Chef to learn how to create a simple Chef Server.</p>
+<p>To create a simple cookbook the <a class="reference external" href="https://docs.chef.io/knife.html">knife</a> command is used:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">knife cookbook create cookbook_name</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="http://gettingstartedwithchef.com/first-steps-with-chef.html">Getting started with Chef</a>
+is a good starting point for Chef Beginners and many community maintained cookbooks that can
+serve as a good reference or tweaked to serve your infrastructure configuration needs can be
+found on the <a class="reference external" href="https://supermarket.chef.io/cookbooks">Chef Supermarket</a>.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://docs.chef.io/">Chef Documentation</a></li>
+</ul>
+</div>
+<div class="section" id="puppet">
+<h2>Puppet<a class="headerlink" href="#puppet" title="永久链接至标题">¶</a></h2>
+<p><a class="reference external" href="http://puppetlabs.com">Puppet</a> is IT Automation and configuration management
+software from Puppet Labs that allows System Administrators to define the state
+of their IT Infrastructure, thereby providing an elegant way to manage their
+fleet of physical and virtual machines.</p>
+<p>Puppet is available both as an Open Source and an Enterprise variant. Modules
+are small, shareable units of code written to automate or define the state of a
+system.  <a class="reference external" href="https://forge.puppetlabs.com/">Puppet Forge</a> is a repository for
+modules written by the community for Open Source and Enterprise Puppet.</p>
+<p>Puppet Agents are installed on nodes whose state needs to be monitored or
+changed.  A designated server known as the Puppet Master is responsible for
+orchestrating the agent nodes.</p>
+<p>Agent nodes send basic facts about the system such as the operating system,
+kernel, architecture, IP address, hostname, etc. to the Puppet Master.
+The Puppet Master then compiles a catalog with information provided by the
+agents on how each node should be configured and sends it to the agent. The
+agent enforces the change as prescribed in the catalog and sends a report back
+to the Puppet Master.</p>
+<p>Facter is an interesting tool that ships with Puppet that pulls basic facts
+about the system. These facts can be referenced as a variable while writing
+your Puppet modules.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> facter kernel
+<span class="go">Linux</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> facter operatingsystem
+<span class="go">Ubuntu</span>
+</pre></div>
+</div>
+<p>Writing Modules in Puppet is pretty straight forward. Puppet Manifests together
+form Puppet Modules. Puppet manifests end with an extension of <code class="docutils literal notranslate"><span class="pre">.pp</span></code>.
+Here is an example of ‘Hello World’ in Puppet.</p>
+<div class="highlight-puppet notranslate"><div class="highlight"><pre><span></span><span class="k">notify</span> <span class="p">{</span> <span class="s">&#39;This message is getting logged into the agent node&#39;</span><span class="p">:</span><span class="c"></span>
+
+<span class="c">    #As nothing is specified in the body the resource title</span>
+<span class="c">    #the notification message by default.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here is another example with system based logic. Note how the operating system
+fact is being used as a variable prepended with the <code class="docutils literal notranslate"><span class="pre">$</span></code> sign. Similarly, this
+holds true for other facts such as hostname which can be referenced by
+<code class="docutils literal notranslate"><span class="pre">$hostname</span></code>.</p>
+<div class="highlight-puppet notranslate"><div class="highlight"><pre><span></span><span class="k">notify</span><span class="p">{</span> <span class="s">&#39;Mac Warning&#39;</span><span class="p">:</span>
+    <span class="na">message</span> <span class="o">=&gt;</span> <span class="nv">$operatingsystem</span> <span class="o">?</span> <span class="p">{</span>
+        <span class="s">&#39;Darwin&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;This seems to be a Mac.&#39;</span><span class="p">,</span>
+        <span class="k">default</span>  <span class="o">=&gt;</span> <span class="s">&#39;I am a PC.&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>There are several resource types for Puppet but the package-file-service
+paradigm is all you need for undertaking the majority of the configuration
+management. The following Puppet code makes sure that the OpenSSH-Server
+package is installed in a system and the sshd service is notified to restart
+every time the sshd configuration file is changed.</p>
+<div class="highlight-puppet notranslate"><div class="highlight"><pre><span></span><span class="k">package</span> <span class="p">{</span> <span class="s">&#39;openssh-server&#39;</span><span class="p">:</span>
+    <span class="na">ensure</span> <span class="o">=&gt;</span> <span class="k">installed</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">file</span> <span class="p">{</span> <span class="s">&#39;/etc/ssh/sshd_config&#39;</span><span class="p">:</span>
+    <span class="na">source</span>   <span class="o">=&gt;</span> <span class="s">&#39;puppet:///modules/sshd/sshd_config&#39;</span><span class="p">,</span>
+    <span class="na">owner</span>    <span class="o">=&gt;</span> <span class="s">&#39;root&#39;</span><span class="p">,</span>
+    <span class="na">group</span>    <span class="o">=&gt;</span> <span class="s">&#39;root&#39;</span><span class="p">,</span>
+    <span class="na">mode</span>     <span class="o">=&gt;</span> <span class="s">&#39;640&#39;</span><span class="p">,</span>
+    <span class="k">notify</span>   <span class="o">=&gt;</span>  <span class="k">Service</span><span class="p">[</span><span class="s">&#39;sshd&#39;</span><span class="p">],</span><span class="c"> # sshd will restart</span>
+<span class="c">                                  # whenever you edit this</span>
+<span class="c">                                  # file</span>
+    <span class="na">require</span>  <span class="o">=&gt;</span> <span class="k">Package</span><span class="p">[</span><span class="s">&#39;openssh-server&#39;</span><span class="p">],</span>
+
+<span class="p">}</span>
+
+<span class="k">service</span> <span class="p">{</span> <span class="s">&#39;sshd&#39;</span><span class="p">:</span>
+    <span class="na">ensure</span>    <span class="o">=&gt;</span> <span class="k">running</span><span class="p">,</span>
+    <span class="na">enable</span>    <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="na">hasstatus</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="na">hasrestart</span><span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For more information, refer to the <a class="reference external" href="http://docs.puppetlabs.com">Puppet Labs Documentation</a></p>
+</div>
+<div class="section" id="blueprint">
+<h2>Blueprint<a class="headerlink" href="#blueprint" title="永久链接至标题">¶</a></h2>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">待处理</p>
+<p class="last">Write about Blueprint</p>
+</div>
+</div>
+<div class="section" id="buildout">
+<h2>Buildout<a class="headerlink" href="#buildout" title="永久链接至标题">¶</a></h2>
+<p><a class="reference external" href="http://www.buildout.org">Buildout</a> is an open source software build tool.
+Buildout is created using the Python programming language. It implements a
+principle of separation of configuration from the scripts that do the setting
+up. Buildout is primarily used to download and set up dependencies in <a class="reference external" href="https://stackoverflow.com/questions/2051192/what-is-a-python-egg">Python
+eggs</a>
+format of the software being developed or deployed. Recipes for build tasks in
+any environment can be created, and many are already available.</p>
+</div>
+<div class="section" id="shinken">
+<h2>Shinken<a class="headerlink" href="#shinken" title="永久链接至标题">¶</a></h2>
+<p><a class="reference external" href="http://www.shinken-monitoring.org/">Shinken</a> is a modern, Nagios compatible
+monitoring framework written in Python. Its main goal is to give users a flexible
+architecture for their monitoring system that is designed to scale to large
+environments.</p>
+<p>Shinken is backwards-compatible with the Nagios configuration standard and
+plugins. It works on any operating system and architecture that supports Python,
+which includes Windows, Linux, and FreeBSD.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/python-guide-logo.png" title="The Hitchhiker's Guide to Python"/>
+  </a>
+</p>
+
+<p style="margin-left:auto; margin-right: auto;"><iframe src="https://ghbtns.com/github-btn.html?user=realpython&repo=python-guide&type=watch&count=true&size=large" allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe></p>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<style>
+.algolia-autocomplete{
+  width: 100%;
+  height: 1.5em
+}
+.algolia-autocomplete a{
+  border-bottom: none !important;
+}
+#doc_search{
+  width: 100%;
+  height: 100%;
+}
+</style>
+<input id="doc_search" placeholder="Search the doc" autofocus/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" onload="docsearch({
+  apiKey: '512b0d6c0c8578bed7662f5279c2249c',
+  indexName: 'python-guide',
+  inputSelector: '#doc_search',
+  debug: false // Set debug to true if you want to inspect the dropdown
+})" async></script>
+
+<p>
+  This opinionated guide exists to provide both novice and expert Python developers a best practice handbook to the installation, configuration, and usage of Python on a daily basis.
+</p>
+
+<div style="display:block;position:relative;margin: 1em 0 1em 0;">
+  <div style="display:block;width:100%;padding-top:100%;"></div>
+  <div class="rpad" data-unit="1x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+</div>
+
+<h3>O'Reilly Book</h3>
+
+<p>This guide is now available in tangible book form!</p>
+
+<p><a href="/guide-book" target="_blank"><img style="max-width: 100%; text-align: center;" src="/_static/guide-book-cover.jpg" alt="Python Guide Book Cover"></a></p>
+
+<p>All proceeds are being directly donated to the <a href="https://djangogirls.org">DjangoGirls</a> organization.</p>
+
+<h3>Translations</h3>
+<ul>
+  <li><a href="https://docs.python-guide.org/">English</a></li>
+  <li><a href="https://python-guide-fr.readthedocs.io/fr/latest/">French</a></li>
+  <li><a href="https://pythonguidecn.readthedocs.io/zh/latest/">Chinese</a></li>
+  <li><a href="http://python-guideja.readthedocs.io/ja/latest/">Japanese</a></li>
+  <li><a href="https://python-guide-kr.readthedocs.io/ko/latest/">Korean</a></li>
+  <li><a href="http://python-guide-fil.readthedocs.io/en/latest/">Filipino</a></li>
+  <li><a href="http://python-guide-pt-br.readthedocs.io/pt_BR/latest/">Brazilian Portuguese</a></li>
+</ul>
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Systems Administration</a><ul>
+<li><a class="reference internal" href="#fabric">Fabric</a></li>
+<li><a class="reference internal" href="#salt">Salt</a></li>
+<li><a class="reference internal" href="#psutil">Psutil</a></li>
+<li><a class="reference internal" href="#ansible">Ansible</a></li>
+<li><a class="reference internal" href="#chef">Chef</a></li>
+<li><a class="reference internal" href="#puppet">Puppet</a></li>
+<li><a class="reference internal" href="#blueprint">Blueprint</a></li>
+<li><a class="reference internal" href="#buildout">Buildout</a></li>
+<li><a class="reference internal" href="#shinken">Shinken</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="network.html" title="上一章">Networking</a></li>
+      <li>Next: <a href="ci.html" title="下一章">Continuous Integration</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><!-- Alabaster (krTheme++) Hacks -->
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+  <div style="text-align: center;" id="waldo-tag-2171"></div>
+  <p>&copy;2011-2021 <a href="https://www.kennethreitz.org/projects">Kenneth Reitz</a> &amp; <a href="https://realpython.com">Real Python</a>. <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</a></p>
+</div>
+
+  </body>
+</html>

@@ -1,0 +1,352 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>The Guide Style Guide &#8212; The Hitchhiker&#39;s Guide to Python</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="prev" title="License" href="license.html" />
+  
+
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    div.body {
+      min-width: initial;
+      max-width: initial;
+    }
+  </style>
+
+  
+  <link rel="canonical" href="https://docs.python-guide.org/notes/styleguide/"/>
+  <meta property="og:url" content="https://docs.python-guide.org/notes/styleguide">
+  
+
+  <link rel="icon" type="image/png" href="https://media.readthedocs.org/images/favicon.png">
+
+  <meta name="google-site-verification" content="013PxE2_8KX9jdUSC5gr8QsfdxTXr1mFgmD9zplp5II" />
+
+  <meta name="twitter:card" content="summary">
+  <meta property="twitter:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:title" content="The Guide Style Guide &#8212; The Hitchhiker&#39;s Guide to Python">
+  <meta property="og:type" content="article">
+  
+  <meta property="og:description" content="">
+
+  <script>window.rp_prop_id = '29182759436';</script>
+  <script src="https://srv.realpython.net/tag.js" async></script>
+
+  <script src="https://d31vxm9ubutrmw.cloudfront.net/static/js/2169.js"></script>
+
+  
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37242602-11', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+  </head><body>
+
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            <div style="display:block;position:relative; margin-bottom: 1em;">
+              <div style="display:block;width:100%;padding-top:12.5%;"></div>
+              <div class="rpad" data-unit="8x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+            </div>
+            
+  <div class="section" id="the-guide-style-guide">
+<span id="guide-style-guide"></span><h1>The Guide Style Guide<a class="headerlink" href="#the-guide-style-guide" title="永久链接至标题">¶</a></h1>
+<img alt="../_images/33573755856_7f43d43adf_k_d.jpg" src="../_images/33573755856_7f43d43adf_k_d.jpg" />
+<p>As with all documentation, having a consistent format helps make the
+document more understandable. In order to make The Guide easier to digest,
+all contributions should fit within the rules of this style guide where
+appropriate.</p>
+<p>The Guide is written as <a class="reference internal" href="../writing/documentation.html#restructuredtext-ref"><span class="std std-ref">reStructuredText</span></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p class="last">Parts of The Guide may not yet match this style guide. Feel free
+to update those parts to be in sync with The Guide Style Guide</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p class="last">On any page of the rendered HTML you can click “Show Source” to
+see how authors have styled the page.</p>
+</div>
+<div class="section" id="relevancy">
+<h2>Relevancy<a class="headerlink" href="#relevancy" title="永久链接至标题">¶</a></h2>
+<p>Strive to keep any contributions relevant to the <a class="reference internal" href="../intro/duction.html#about-ref"><span class="std std-ref">purpose of The Guide</span></a>.</p>
+<ul class="simple">
+<li>Avoid including too much information on subjects that don’t directly
+relate to Python development.</li>
+<li>Prefer to link to other sources if the information is already out there.
+Be sure to describe what and why you are linking.</li>
+<li><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#citations">Cite</a>
+references where needed.</li>
+<li>If a subject isn’t directly relevant to Python, but useful in conjunction
+with Python (e.g., Git, GitHub, Databases), reference by linking to useful
+resources, and describe why it’s useful to Python.</li>
+<li>When in doubt, ask.</li>
+</ul>
+</div>
+<div class="section" id="headings">
+<h2>Headings<a class="headerlink" href="#headings" title="永久链接至标题">¶</a></h2>
+<p>Use the following styles for headings.</p>
+<p>Chapter title:</p>
+<div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="gh">#########</span>
+<span class="gh">Chapter 1</span>
+<span class="gh">#########</span>
+</pre></div>
+</div>
+<p>Page title:</p>
+<div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="gh">*******************</span>
+<span class="gh">Time is an Illusion</span>
+<span class="gh">*******************</span>
+</pre></div>
+</div>
+<p>Section headings:</p>
+<div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="gh">Lunchtime Doubly So</span>
+<span class="gh">===================</span>
+</pre></div>
+</div>
+<p>Sub section headings:</p>
+<div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="gh">Very Deep</span>
+<span class="gh">---------</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="prose">
+<h2>Prose<a class="headerlink" href="#prose" title="永久链接至标题">¶</a></h2>
+<p>Wrap text lines at 78 characters. Where necessary, lines may exceed 78
+characters, especially if wrapping would make the source text more difficult
+to read.</p>
+<p>Use Standard American English, not British English.</p>
+<p>Use of the <a class="reference external" href="https://en.wikipedia.org/wiki/Serial_comma">serial comma</a>
+(also known as the Oxford comma) is 100% non-optional. Any attempt to
+submit content with a missing serial comma will result in permanent banishment
+from this project, due to complete and total lack of taste.</p>
+<p>Banishment? Is this a joke? Hopefully we will never have to find out.</p>
+</div>
+<div class="section" id="code-examples">
+<h2>Code Examples<a class="headerlink" href="#code-examples" title="永久链接至标题">¶</a></h2>
+<p>Wrap all code examples at 70 characters to avoid horizontal scrollbars.</p>
+<p>Command line examples:</p>
+<div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">code-block</span><span class="p">::</span> <span class="k">console</span>
+
+    <span class="gp">$</span> run <span class="nb">command</span> --help
+    <span class="gp">$</span> ls ..
+</pre></div>
+</div>
+<p>Be sure to include the <code class="docutils literal notranslate"><span class="pre">$</span></code> prefix before each line for Unix console examples.</p>
+<p>For Windows console examples, use <code class="docutils literal notranslate"><span class="pre">doscon</span></code> or <code class="docutils literal notranslate"><span class="pre">powershell</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">console</span></code>, and omit the <code class="docutils literal notranslate"><span class="pre">$</span></code> prefix.</p>
+<p>Python interpreter examples:</p>
+<div class="highlight-rest notranslate"><div class="highlight"><pre><span></span>Label the example::
+
+<span class="p">..</span> <span class="ow">code-block</span><span class="p">::</span> python
+
+    &gt;&gt;&gt; import this
+</pre></div>
+</div>
+<p>Python examples:</p>
+<div class="highlight-rest notranslate"><div class="highlight"><pre><span></span>Descriptive title::
+
+<span class="p">..</span> <span class="ow">code-block</span><span class="p">::</span> <span class="k">python</span>
+
+    <span class="k">def</span> <span class="nf">get_answer</span><span class="p">():</span>
+        <span class="k">return</span> <span class="mi">42</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="externally-linking">
+<h2>Externally Linking<a class="headerlink" href="#externally-linking" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p class="first">Prefer labels for well known subjects (e.g. proper nouns) when linking:</p>
+<div class="highlight-rest notranslate"><div class="highlight"><pre><span></span>Sphinx_ is used to document Python.
+
+<span class="p">..</span> <span class="nt">_Sphinx:</span> https://www.sphinx-doc.org
+</pre></div>
+</div>
+</li>
+<li><p class="first">Prefer to use descriptive labels with inline links instead of leaving bare
+links:</p>
+<div class="highlight-rest notranslate"><div class="highlight"><pre><span></span>Read the <span class="s">`Sphinx Tutorial </span><span class="si">&lt;https://www.sphinx-doc.org/en/master/usage/quickstart.html&gt;</span><span class="s">`_</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Avoid using labels such as “click here”, “this”, etc., preferring
+descriptive labels (SEO worthy) instead.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="linking-to-sections-in-the-guide">
+<h2>Linking to Sections in The Guide<a class="headerlink" href="#linking-to-sections-in-the-guide" title="永久链接至标题">¶</a></h2>
+<p>To cross-reference other parts of this documentation, use the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-ref">:ref:</a>
+keyword and labels.</p>
+<p>To make reference labels more clear and unique, always add a <code class="docutils literal notranslate"><span class="pre">-ref</span></code> suffix:</p>
+<div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="nt">_some-section-ref:</span>
+
+<span class="gh">Some Section</span>
+<span class="gh">------------</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="notes-and-warnings">
+<h2>Notes and Warnings<a class="headerlink" href="#notes-and-warnings" title="永久链接至标题">¶</a></h2>
+<p>Make use of the appropriate <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#directives">admonitions directives</a> when making notes.</p>
+<p>Notes:</p>
+<div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">note</span><span class="p">::</span>
+    The Hitchhiker’s Guide to the Galaxy has a few things to say
+    on the subject of towels. A towel, it says, is about the most
+    massively useful thing an interstellar hitch hiker can have.
+</pre></div>
+</div>
+<p>Warnings:</p>
+<div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">warning</span><span class="p">::</span> DON&#39;T PANIC
+</pre></div>
+</div>
+</div>
+<div class="section" id="todos">
+<h2>TODOs<a class="headerlink" href="#todos" title="永久链接至标题">¶</a></h2>
+<p>Please mark any incomplete areas of The Guide with a <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/todo.html">todo directive</a>. To
+avoid cluttering the <a class="reference internal" href="contribute.html#todo-list-ref"><span class="std std-ref">Todo List</span></a>, use a single <code class="docutils literal notranslate"><span class="pre">todo</span></code> for stub
+documents or large incomplete sections.</p>
+<div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">todo</span><span class="p">::</span>
+    Learn the Ultimate Answer to the Ultimate Question
+    of Life, The Universe, and Everything
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/python-guide-logo.png" title="The Hitchhiker's Guide to Python"/>
+  </a>
+</p>
+
+<p style="margin-left:auto; margin-right: auto;"><iframe src="https://ghbtns.com/github-btn.html?user=realpython&repo=python-guide&type=watch&count=true&size=large" allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe></p>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<style>
+.algolia-autocomplete{
+  width: 100%;
+  height: 1.5em
+}
+.algolia-autocomplete a{
+  border-bottom: none !important;
+}
+#doc_search{
+  width: 100%;
+  height: 100%;
+}
+</style>
+<input id="doc_search" placeholder="Search the doc" autofocus/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" onload="docsearch({
+  apiKey: '512b0d6c0c8578bed7662f5279c2249c',
+  indexName: 'python-guide',
+  inputSelector: '#doc_search',
+  debug: false // Set debug to true if you want to inspect the dropdown
+})" async></script>
+
+<p>
+  This opinionated guide exists to provide both novice and expert Python developers a best practice handbook to the installation, configuration, and usage of Python on a daily basis.
+</p>
+
+<div style="display:block;position:relative;margin: 1em 0 1em 0;">
+  <div style="display:block;width:100%;padding-top:100%;"></div>
+  <div class="rpad" data-unit="1x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+</div>
+
+<h3>O'Reilly Book</h3>
+
+<p>This guide is now available in tangible book form!</p>
+
+<p><a href="/guide-book" target="_blank"><img style="max-width: 100%; text-align: center;" src="/_static/guide-book-cover.jpg" alt="Python Guide Book Cover"></a></p>
+
+<p>All proceeds are being directly donated to the <a href="https://djangogirls.org">DjangoGirls</a> organization.</p>
+
+<h3>Translations</h3>
+<ul>
+  <li><a href="https://docs.python-guide.org/">English</a></li>
+  <li><a href="https://python-guide-fr.readthedocs.io/fr/latest/">French</a></li>
+  <li><a href="https://pythonguidecn.readthedocs.io/zh/latest/">Chinese</a></li>
+  <li><a href="http://python-guideja.readthedocs.io/ja/latest/">Japanese</a></li>
+  <li><a href="https://python-guide-kr.readthedocs.io/ko/latest/">Korean</a></li>
+  <li><a href="http://python-guide-fil.readthedocs.io/en/latest/">Filipino</a></li>
+  <li><a href="http://python-guide-pt-br.readthedocs.io/pt_BR/latest/">Brazilian Portuguese</a></li>
+</ul>
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Guide Style Guide</a><ul>
+<li><a class="reference internal" href="#relevancy">Relevancy</a></li>
+<li><a class="reference internal" href="#headings">Headings</a></li>
+<li><a class="reference internal" href="#prose">Prose</a></li>
+<li><a class="reference internal" href="#code-examples">Code Examples</a></li>
+<li><a class="reference internal" href="#externally-linking">Externally Linking</a></li>
+<li><a class="reference internal" href="#linking-to-sections-in-the-guide">Linking to Sections in The Guide</a></li>
+<li><a class="reference internal" href="#notes-and-warnings">Notes and Warnings</a></li>
+<li><a class="reference internal" href="#todos">TODOs</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="license.html" title="上一章">License</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><!-- Alabaster (krTheme++) Hacks -->
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+  <div style="text-align: center;" id="waldo-tag-2171"></div>
+  <p>&copy;2011-2021 <a href="https://www.kennethreitz.org/projects">Kenneth Reitz</a> &amp; <a href="https://realpython.com">Real Python</a>. <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</a></p>
+</div>
+
+  </body>
+</html>

@@ -1,0 +1,289 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Further Configuration of pip and Virtualenv &#8212; The Hitchhiker&#39;s Guide to Python</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Structuring Your Project" href="../writing/structure.html" />
+    <link rel="prev" title="Your Development Environment" href="env.html" />
+  
+
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    div.body {
+      min-width: initial;
+      max-width: initial;
+    }
+  </style>
+
+  
+  <link rel="canonical" href="https://docs.python-guide.org/dev/pip-virtualenv/"/>
+  <meta property="og:url" content="https://docs.python-guide.org/dev/pip-virtualenv">
+  
+
+  <link rel="icon" type="image/png" href="https://media.readthedocs.org/images/favicon.png">
+
+  <meta name="google-site-verification" content="013PxE2_8KX9jdUSC5gr8QsfdxTXr1mFgmD9zplp5II" />
+
+  <meta name="twitter:card" content="summary">
+  <meta property="twitter:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:title" content="Further Configuration of pip and Virtualenv &#8212; The Hitchhiker&#39;s Guide to Python">
+  <meta property="og:type" content="article">
+  
+  <meta property="og:description" content="">
+
+  <script>window.rp_prop_id = '29182759436';</script>
+  <script src="https://srv.realpython.net/tag.js" async></script>
+
+  <script src="https://d31vxm9ubutrmw.cloudfront.net/static/js/2169.js"></script>
+
+  
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37242602-11', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+  </head><body>
+
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            <div style="display:block;position:relative; margin-bottom: 1em;">
+              <div style="display:block;width:100%;padding-top:12.5%;"></div>
+              <div class="rpad" data-unit="8x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+            </div>
+            
+  <div class="section" id="further-configuration-of-pip-and-virtualenv">
+<span id="pip-virtualenv"></span><h1>Further Configuration of pip and Virtualenv<a class="headerlink" href="#further-configuration-of-pip-and-virtualenv" title="永久链接至标题">¶</a></h1>
+<img alt="../_images/34018732105_f0e6758859_k_d.jpg" src="../_images/34018732105_f0e6758859_k_d.jpg" />
+<div class="section" id="requiring-an-active-virtual-environment-for-pip">
+<h2>Requiring an active virtual environment for <code class="docutils literal notranslate"><span class="pre">pip</span></code><a class="headerlink" href="#requiring-an-active-virtual-environment-for-pip" title="永久链接至标题">¶</a></h2>
+<p>By now it should be clear that using virtual environments is a great way to
+keep your development environment clean and keeping different projects’
+requirements separate.</p>
+<p>When you start working on many different projects, it can be hard to remember to
+activate the related virtual environment when you come back to a specific
+project.  As a result of this, it is very easy to install packages globally
+while thinking that you are actually installing the package for the virtual
+environment of the project. Over time this can result in a messy global package
+list.</p>
+<p>In order to make sure that you install packages to your active virtual
+environment when you use <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code>, consider adding the following
+line to your <code class="file docutils literal notranslate"><span class="pre">~/.bashrc</span></code> file:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">export PIP_REQUIRE_VIRTUALENV=true</span>
+</pre></div>
+</div>
+<p>After saving this change and sourcing the <code class="file docutils literal notranslate"><span class="pre">~/.bashrc</span></code> file with
+<code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">~/.bashrc</span></code>, pip will no longer let you install packages if you are not
+in a virtual environment.  If you try to use <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code> outside of a
+virtual environment pip will gently remind you that an activated virtual
+environment is needed to install packages.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install requests
+<span class="go">Could not find an activated virtualenv (required).</span>
+</pre></div>
+</div>
+<p>You can also do this configuration by editing your <code class="file docutils literal notranslate"><span class="pre">pip.conf</span></code> or
+<code class="file docutils literal notranslate"><span class="pre">pip.ini</span></code> file. <code class="file docutils literal notranslate"><span class="pre">pip.conf</span></code> is used by Unix and Mac OS X operating
+systems and it can be found at:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span>HOME/.pip/pip.conf
+</pre></div>
+</div>
+<p>Similarly, the <code class="file docutils literal notranslate"><span class="pre">pip.ini</span></code> file is used by Windows operating systems and it
+can be found at:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">%</span>USERPROFILE%<span class="se">\p</span>ip<span class="se">\p</span>ip.ini
+</pre></div>
+</div>
+<p>If you don’t have a <code class="file docutils literal notranslate"><span class="pre">pip.conf</span></code> or <code class="file docutils literal notranslate"><span class="pre">pip.ini</span></code> file at these locations,
+you can create a new file with the correct name for your operating system.</p>
+<p>If you already have a configuration file, just add the following line under the
+<code class="docutils literal notranslate"><span class="pre">[global]</span></code> settings to require an active virtual environment:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">require-virtualenv = true</span>
+</pre></div>
+</div>
+<p>If you did not have a configuration file, you will need to create a new one and
+add the following lines to this new file:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">[global]</span>
+<span class="go">require-virtualenv = true</span>
+</pre></div>
+</div>
+<p>You will of course need to install some packages globally (usually ones that
+you use across different projects consistently) and this can be accomplished by
+adding the following to your <code class="file docutils literal notranslate"><span class="pre">~/.bashrc</span></code> file:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">gpip() {</span>
+<span class="go">    PIP_REQUIRE_VIRTUALENV=false pip &quot;$@&quot;</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<p>After saving the changes and sourcing your <code class="file docutils literal notranslate"><span class="pre">~/.bashrc</span></code> file you can now
+install packages globally by running <code class="docutils literal notranslate"><span class="pre">gpip</span> <span class="pre">install</span></code>. You can change the name
+of the function to anything you like, just keep in mind that you will have to
+use that name when trying to install packages globally with pip.</p>
+</div>
+<div class="section" id="caching-packages-for-future-use">
+<h2>Caching packages for future use<a class="headerlink" href="#caching-packages-for-future-use" title="永久链接至标题">¶</a></h2>
+<p>Every developer has preferred libraries and when you are working on a lot of
+different projects, you are bound to have some overlap between the libraries
+that you use. For example, you may be using the <code class="docutils literal notranslate"><span class="pre">requests</span></code> library in a lot
+of different projects.</p>
+<p>It is surely unnecessary to re-download the same packages/libraries each time
+you start working on a new project (and in a new virtual environment as a
+result). Fortunately, starting with version 6.0, pip provides an <a class="reference external" href="https://pip.pypa.io/en/stable/reference/pip_install/#caching">on-by-default
+caching mechanism</a> that doesn’t
+need any configuration.</p>
+<p>When using older versions, you can configure pip in such a way that it tries to
+reuse already installed packages, too.</p>
+<p>On Unix systems, you can add the following line to your <code class="file docutils literal notranslate"><span class="pre">.bashrc</span></code> or
+<code class="file docutils literal notranslate"><span class="pre">.bash_profile</span></code> file.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache</span>
+</pre></div>
+</div>
+<p>You can set the path to anywhere you like (as long as you have write
+access). After adding this line, <code class="docutils literal notranslate"><span class="pre">source</span></code> your <code class="file docutils literal notranslate"><span class="pre">.bashrc</span></code>
+(or <code class="file docutils literal notranslate"><span class="pre">.bash_profile</span></code>) file and you will be all set.</p>
+<p>Another way of doing the same configuration is via the <code class="file docutils literal notranslate"><span class="pre">pip.conf</span></code> or
+<code class="file docutils literal notranslate"><span class="pre">pip.ini</span></code> files, depending on your system. If you are on Windows, you can
+add the following line to your <code class="file docutils literal notranslate"><span class="pre">pip.ini</span></code> file under <code class="docutils literal notranslate"><span class="pre">[global]</span></code> settings:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">download-cache = %USERPROFILE%\pip\cache</span>
+</pre></div>
+</div>
+<p>Similarly, on Unix systems you should simply add the following line to your
+<code class="file docutils literal notranslate"><span class="pre">pip.conf</span></code> file under <code class="docutils literal notranslate"><span class="pre">[global]</span></code> settings:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">download-cache = $HOME/.pip/cache</span>
+</pre></div>
+</div>
+<p>Even though you can use any path you like to store your cache, it is recommended
+that you create a new folder <em>in</em> the folder where your <code class="file docutils literal notranslate"><span class="pre">pip.conf</span></code> or
+<code class="file docutils literal notranslate"><span class="pre">pip.ini</span></code> file lives. If you don’t trust yourself with all of this path
+voodoo, just use the values provided here and you will be fine.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/python-guide-logo.png" title="The Hitchhiker's Guide to Python"/>
+  </a>
+</p>
+
+<p style="margin-left:auto; margin-right: auto;"><iframe src="https://ghbtns.com/github-btn.html?user=realpython&repo=python-guide&type=watch&count=true&size=large" allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe></p>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<style>
+.algolia-autocomplete{
+  width: 100%;
+  height: 1.5em
+}
+.algolia-autocomplete a{
+  border-bottom: none !important;
+}
+#doc_search{
+  width: 100%;
+  height: 100%;
+}
+</style>
+<input id="doc_search" placeholder="Search the doc" autofocus/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" onload="docsearch({
+  apiKey: '512b0d6c0c8578bed7662f5279c2249c',
+  indexName: 'python-guide',
+  inputSelector: '#doc_search',
+  debug: false // Set debug to true if you want to inspect the dropdown
+})" async></script>
+
+<p>
+  This opinionated guide exists to provide both novice and expert Python developers a best practice handbook to the installation, configuration, and usage of Python on a daily basis.
+</p>
+
+<div style="display:block;position:relative;margin: 1em 0 1em 0;">
+  <div style="display:block;width:100%;padding-top:100%;"></div>
+  <div class="rpad" data-unit="1x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+</div>
+
+<h3>O'Reilly Book</h3>
+
+<p>This guide is now available in tangible book form!</p>
+
+<p><a href="/guide-book" target="_blank"><img style="max-width: 100%; text-align: center;" src="/_static/guide-book-cover.jpg" alt="Python Guide Book Cover"></a></p>
+
+<p>All proceeds are being directly donated to the <a href="https://djangogirls.org">DjangoGirls</a> organization.</p>
+
+<h3>Translations</h3>
+<ul>
+  <li><a href="https://docs.python-guide.org/">English</a></li>
+  <li><a href="https://python-guide-fr.readthedocs.io/fr/latest/">French</a></li>
+  <li><a href="https://pythonguidecn.readthedocs.io/zh/latest/">Chinese</a></li>
+  <li><a href="http://python-guideja.readthedocs.io/ja/latest/">Japanese</a></li>
+  <li><a href="https://python-guide-kr.readthedocs.io/ko/latest/">Korean</a></li>
+  <li><a href="http://python-guide-fil.readthedocs.io/en/latest/">Filipino</a></li>
+  <li><a href="http://python-guide-pt-br.readthedocs.io/pt_BR/latest/">Brazilian Portuguese</a></li>
+</ul>
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Further Configuration of pip and Virtualenv</a><ul>
+<li><a class="reference internal" href="#requiring-an-active-virtual-environment-for-pip">Requiring an active virtual environment for <code class="docutils literal notranslate"><span class="pre">pip</span></code></a></li>
+<li><a class="reference internal" href="#caching-packages-for-future-use">Caching packages for future use</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="env.html" title="上一章">Your Development Environment</a></li>
+      <li>Next: <a href="../writing/structure.html" title="下一章">Structuring Your Project</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><!-- Alabaster (krTheme++) Hacks -->
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+  <div style="text-align: center;" id="waldo-tag-2171"></div>
+  <p>&copy;2011-2021 <a href="https://www.kennethreitz.org/projects">Kenneth Reitz</a> &amp; <a href="https://realpython.com">Real Python</a>. <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</a></p>
+</div>
+
+  </body>
+</html>

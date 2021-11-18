@@ -1,0 +1,242 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Network Applications &#8212; The Hitchhiker&#39;s Guide to Python</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Web Applications &amp; Frameworks" href="web.html" />
+    <link rel="prev" title="Choosing a License" href="../writing/license.html" />
+  
+
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    div.body {
+      min-width: initial;
+      max-width: initial;
+    }
+  </style>
+
+  
+  <link rel="canonical" href="https://docs.python-guide.org/scenarios/client/"/>
+  <meta property="og:url" content="https://docs.python-guide.org/scenarios/client">
+  
+
+  <link rel="icon" type="image/png" href="https://media.readthedocs.org/images/favicon.png">
+
+  <meta name="google-site-verification" content="013PxE2_8KX9jdUSC5gr8QsfdxTXr1mFgmD9zplp5II" />
+
+  <meta name="twitter:card" content="summary">
+  <meta property="twitter:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:image" content="https://docs.python-guide.org/_static/social-card.jpg">
+  <meta property="og:title" content="Network Applications &#8212; The Hitchhiker&#39;s Guide to Python">
+  <meta property="og:type" content="article">
+  
+  <meta property="og:description" content="">
+
+  <script>window.rp_prop_id = '29182759436';</script>
+  <script src="https://srv.realpython.net/tag.js" async></script>
+
+  <script src="https://d31vxm9ubutrmw.cloudfront.net/static/js/2169.js"></script>
+
+  
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-37242602-11', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+  </head><body>
+
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            <div style="display:block;position:relative; margin-bottom: 1em;">
+              <div style="display:block;width:100%;padding-top:12.5%;"></div>
+              <div class="rpad" data-unit="8x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+            </div>
+            
+  <div class="section" id="network-applications">
+<h1>Network Applications<a class="headerlink" href="#network-applications" title="永久链接至标题">¶</a></h1>
+<img alt="../_images/34364815780_bea6614025_k_d.jpg" src="../_images/34364815780_bea6614025_k_d.jpg" />
+<div class="section" id="http">
+<h2>HTTP<a class="headerlink" href="#http" title="永久链接至标题">¶</a></h2>
+<p>The Hypertext Transfer Protocol (HTTP) is an application protocol for
+distributed, collaborative, hypermedia information systems. HTTP is the
+foundation of data communication for the World Wide Web.</p>
+<div class="section" id="requests">
+<h3>Requests<a class="headerlink" href="#requests" title="永久链接至标题">¶</a></h3>
+<p>Python’s standard urllib2 module provides most of the HTTP capabilities you
+need, but the API is thoroughly broken. It was built for a different time —
+and a different web. It requires an enormous amount of work (even method
+overrides) to perform the simplest of tasks.</p>
+<p>Requests takes all of the work out of Python HTTP — making your integration
+with web services seamless. There’s no need to manually add query strings to
+your URLs, or to form-encode your POST data. Keep-alive and HTTP connection
+pooling are 100% automatic, powered by urllib3, which is embedded within
+Requests.</p>
+<ul class="simple">
+<li><a class="reference external" href="http://docs.python-requests.org/en/latest/index.html">Documentation</a></li>
+<li><a class="reference external" href="http://pypi.org/project/requests">PyPi</a></li>
+<li><a class="reference external" href="https://github.com/kennethreitz/requests">GitHub</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="distributed-systems">
+<h2>Distributed Systems<a class="headerlink" href="#distributed-systems" title="永久链接至标题">¶</a></h2>
+<div class="section" id="zeromq">
+<h3>ZeroMQ<a class="headerlink" href="#zeromq" title="永久链接至标题">¶</a></h3>
+<p>ØMQ (also spelled ZeroMQ, 0MQ or ZMQ) is a high-performance asynchronous
+messaging library aimed at use in scalable distributed or concurrent
+applications. It provides a message queue, but unlike message-oriented
+middleware, a ØMQ system can run without a dedicated message broker. The
+library is designed to have a familiar socket-style API.</p>
+</div>
+<div class="section" id="rabbitmq">
+<h3>RabbitMQ<a class="headerlink" href="#rabbitmq" title="永久链接至标题">¶</a></h3>
+<p>RabbitMQ is an open source message broker software that implements the Advanced
+Message Queuing Protocol (AMQP).  The RabbitMQ server is written in the Erlang
+programming language and is built on the Open Telecom Platform framework for
+clustering and failover. Client libraries to interface with the broker are
+available for all major programming languages.</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.rabbitmq.com/">Homepage</a></li>
+<li><a class="reference external" href="https://github.com/rabbitmq?page=1">GitHub Organization</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/python-guide-logo.png" title="The Hitchhiker's Guide to Python"/>
+  </a>
+</p>
+
+<p style="margin-left:auto; margin-right: auto;"><iframe src="https://ghbtns.com/github-btn.html?user=realpython&repo=python-guide&type=watch&count=true&size=large" allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe></p>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<style>
+.algolia-autocomplete{
+  width: 100%;
+  height: 1.5em
+}
+.algolia-autocomplete a{
+  border-bottom: none !important;
+}
+#doc_search{
+  width: 100%;
+  height: 100%;
+}
+</style>
+<input id="doc_search" placeholder="Search the doc" autofocus/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" onload="docsearch({
+  apiKey: '512b0d6c0c8578bed7662f5279c2249c',
+  indexName: 'python-guide',
+  inputSelector: '#doc_search',
+  debug: false // Set debug to true if you want to inspect the dropdown
+})" async></script>
+
+<p>
+  This opinionated guide exists to provide both novice and expert Python developers a best practice handbook to the installation, configuration, and usage of Python on a daily basis.
+</p>
+
+<div style="display:block;position:relative;margin: 1em 0 1em 0;">
+  <div style="display:block;width:100%;padding-top:100%;"></div>
+  <div class="rpad" data-unit="1x1" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;"></div>
+</div>
+
+<h3>O'Reilly Book</h3>
+
+<p>This guide is now available in tangible book form!</p>
+
+<p><a href="/guide-book" target="_blank"><img style="max-width: 100%; text-align: center;" src="/_static/guide-book-cover.jpg" alt="Python Guide Book Cover"></a></p>
+
+<p>All proceeds are being directly donated to the <a href="https://djangogirls.org">DjangoGirls</a> organization.</p>
+
+<h3>Translations</h3>
+<ul>
+  <li><a href="https://docs.python-guide.org/">English</a></li>
+  <li><a href="https://python-guide-fr.readthedocs.io/fr/latest/">French</a></li>
+  <li><a href="https://pythonguidecn.readthedocs.io/zh/latest/">Chinese</a></li>
+  <li><a href="http://python-guideja.readthedocs.io/ja/latest/">Japanese</a></li>
+  <li><a href="https://python-guide-kr.readthedocs.io/ko/latest/">Korean</a></li>
+  <li><a href="http://python-guide-fil.readthedocs.io/en/latest/">Filipino</a></li>
+  <li><a href="http://python-guide-pt-br.readthedocs.io/pt_BR/latest/">Brazilian Portuguese</a></li>
+</ul>
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Network Applications</a><ul>
+<li><a class="reference internal" href="#http">HTTP</a><ul>
+<li><a class="reference internal" href="#requests">Requests</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#distributed-systems">Distributed Systems</a><ul>
+<li><a class="reference internal" href="#zeromq">ZeroMQ</a></li>
+<li><a class="reference internal" href="#rabbitmq">RabbitMQ</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../writing/license.html" title="上一章">Choosing a License</a></li>
+      <li>Next: <a href="web.html" title="下一章">Web Applications &amp; Frameworks</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script><!-- Alabaster (krTheme++) Hacks -->
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+  <div style="text-align: center;" id="waldo-tag-2171"></div>
+  <p>&copy;2011-2021 <a href="https://www.kennethreitz.org/projects">Kenneth Reitz</a> &amp; <a href="https://realpython.com">Real Python</a>. <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</a></p>
+</div>
+
+  </body>
+</html>
