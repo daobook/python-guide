@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>The Guide Style Guide &#8212; The Hitchhiker&#39;s Guide to Python</title>
+    <title>风格指南指引 &#8212; The Hitchhiker&#39;s Guide to Python</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -16,7 +16,7 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="prev" title="License" href="license.html" />
+    <link rel="prev" title="许可证" href="license.html" />
   
 
   
@@ -41,7 +41,7 @@
   <meta name="twitter:card" content="summary">
   <meta property="twitter:image" content="https://docs.python-guide.org/_static/social-card.jpg">
   <meta property="og:image" content="https://docs.python-guide.org/_static/social-card.jpg">
-  <meta property="og:title" content="The Guide Style Guide &#8212; The Hitchhiker&#39;s Guide to Python">
+  <meta property="og:title" content="风格指南指引 &#8212; The Hitchhiker&#39;s Guide to Python">
   <meta property="og:type" content="article">
   
   <meta property="og:description" content="">
@@ -79,91 +79,75 @@
             </div>
             
   <div class="section" id="the-guide-style-guide">
-<span id="guide-style-guide"></span><h1>The Guide Style Guide<a class="headerlink" href="#the-guide-style-guide" title="永久链接至标题">¶</a></h1>
+<span id="guide-style-guide"></span><h1>风格指南指引<a class="headerlink" href="#the-guide-style-guide" title="永久链接至标题">¶</a></h1>
 <img alt="../_images/33573755856_7f43d43adf_k_d.jpg" src="../_images/33573755856_7f43d43adf_k_d.jpg" />
-<p>As with all documentation, having a consistent format helps make the
-document more understandable. In order to make The Guide easier to digest,
-all contributions should fit within the rules of this style guide where
-appropriate.</p>
-<p>The Guide is written as <a class="reference internal" href="../writing/documentation.html#restructuredtext-ref"><span class="std std-ref">reStructuredText</span></a>.</p>
+<p>与所有文档一样，拥有一致的格式有助于使文档更容易理解。为了使指南更容易被消化，所有的贡献都应酌情符合本风格指南的规则。</p>
+<p>指南的写法是 <a class="reference internal" href="../writing/documentation.html#restructuredtext-ref"><span class="std std-ref">reStructuredText</span></a>。</p>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
-<p class="last">Parts of The Guide may not yet match this style guide. Feel free
-to update those parts to be in sync with The Guide Style Guide</p>
+<p class="last">指南的部分内容可能还不符合本风格指南。请随时更新这些部分，以便指南的风格指南保持同步</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
-<p class="last">On any page of the rendered HTML you can click “Show Source” to
-see how authors have styled the page.</p>
+<p class="last">在渲染的 HTML 的任何一页上，你可以点击 “显示源码” 来查看作者是如何设计页面的。</p>
 </div>
 <div class="section" id="relevancy">
-<h2>Relevancy<a class="headerlink" href="#relevancy" title="永久链接至标题">¶</a></h2>
-<p>Strive to keep any contributions relevant to the <a class="reference internal" href="../intro/duction.html#about-ref"><span class="std std-ref">purpose of The Guide</span></a>.</p>
+<h2>相关性<a class="headerlink" href="#relevancy" title="永久链接至标题">¶</a></h2>
+<p>努力使任何贡献与 <a class="reference internal" href="../intro/duction.html#about-ref"><span class="std std-ref">指南的目的</span></a> 相关。</p>
 <ul class="simple">
-<li>Avoid including too much information on subjects that don’t directly
-relate to Python development.</li>
-<li>Prefer to link to other sources if the information is already out there.
-Be sure to describe what and why you are linking.</li>
-<li><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#citations">Cite</a>
-references where needed.</li>
-<li>If a subject isn’t directly relevant to Python, but useful in conjunction
-with Python (e.g., Git, GitHub, Databases), reference by linking to useful
-resources, and describe why it’s useful to Python.</li>
-<li>When in doubt, ask.</li>
+<li>避免包括太多与 Python 开发没有直接关系的主题的信息。</li>
+<li>如果信息已经存在，更愿意链接到其他来源。一定要描述你所链接的内容和原因。</li>
+<li>在需要的地方 <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#citations">引用</a> 参考资料。</li>
+<li>如果一个主题与 Python 不直接相关，但与 Python 结合起来很有用（例如，Git、GitHub、数据库），通过链接到有用的资源来参考，并描述为什么它对 Python 有用。</li>
+<li>有疑问时，请询问。</li>
 </ul>
 </div>
 <div class="section" id="headings">
-<h2>Headings<a class="headerlink" href="#headings" title="永久链接至标题">¶</a></h2>
-<p>Use the following styles for headings.</p>
-<p>Chapter title:</p>
+<h2>标题<a class="headerlink" href="#headings" title="永久链接至标题">¶</a></h2>
+<p>使用下列风格作为标题。</p>
+<p>章节标题：</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="gh">#########</span>
 <span class="gh">Chapter 1</span>
 <span class="gh">#########</span>
 </pre></div>
 </div>
-<p>Page title:</p>
+<p>章节标题：</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="gh">*******************</span>
 <span class="gh">Time is an Illusion</span>
 <span class="gh">*******************</span>
 </pre></div>
 </div>
-<p>Section headings:</p>
+<p>小节标题：</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="gh">Lunchtime Doubly So</span>
 <span class="gh">===================</span>
 </pre></div>
 </div>
-<p>Sub section headings:</p>
+<p>小节标题：</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="gh">Very Deep</span>
 <span class="gh">---------</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="prose">
-<h2>Prose<a class="headerlink" href="#prose" title="永久链接至标题">¶</a></h2>
-<p>Wrap text lines at 78 characters. Where necessary, lines may exceed 78
-characters, especially if wrapping would make the source text more difficult
-to read.</p>
-<p>Use Standard American English, not British English.</p>
-<p>Use of the <a class="reference external" href="https://en.wikipedia.org/wiki/Serial_comma">serial comma</a>
-(also known as the Oxford comma) is 100% non-optional. Any attempt to
-submit content with a missing serial comma will result in permanent banishment
-from this project, due to complete and total lack of taste.</p>
-<p>Banishment? Is this a joke? Hopefully we will never have to find out.</p>
+<h2>换行<a class="headerlink" href="#prose" title="永久链接至标题">¶</a></h2>
+<p>以 78 个字符包住文本行。必要时，行的列数可以超过 78 个字符，特别是如果包裹会使源文本更难以阅读。</p>
+<p>使用标准的美式英语，而非英式英语。</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Serial_comma">序列逗号</a> （serial comma） （也称为 Oxford comma，牛津逗号）的使用是 100% 没有选择的。任何尝试以缺少的连续逗号提交内容，将导致该项目的永久性移除，因为完全缺乏品味。</p>
+<p>流放？ 您在开玩笑吗？ 希望我们永远不必找出来。</p>
 </div>
 <div class="section" id="code-examples">
-<h2>Code Examples<a class="headerlink" href="#code-examples" title="永久链接至标题">¶</a></h2>
-<p>Wrap all code examples at 70 characters to avoid horizontal scrollbars.</p>
-<p>Command line examples:</p>
+<h2>代码例子<a class="headerlink" href="#code-examples" title="永久链接至标题">¶</a></h2>
+<p>所有代码示例要在 70 个字符进行换行，以避免出现水平滚动条。</p>
+<p>命令行例子：</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">code-block</span><span class="p">::</span> <span class="k">console</span>
 
     <span class="gp">$</span> run <span class="nb">command</span> --help
     <span class="gp">$</span> ls ..
 </pre></div>
 </div>
-<p>Be sure to include the <code class="docutils literal notranslate"><span class="pre">$</span></code> prefix before each line for Unix console examples.</p>
-<p>For Windows console examples, use <code class="docutils literal notranslate"><span class="pre">doscon</span></code> or <code class="docutils literal notranslate"><span class="pre">powershell</span></code> instead of
-<code class="docutils literal notranslate"><span class="pre">console</span></code>, and omit the <code class="docutils literal notranslate"><span class="pre">$</span></code> prefix.</p>
-<p>Python interpreter examples:</p>
+<p>对于 Unix 控制台的例子，请确保在每一行之前包括 <code class="docutils literal notranslate"><span class="pre">$</span></code> 前缀。</p>
+<p>对于 Windows 控制台的例子，使用 <code class="docutils literal notranslate"><span class="pre">doscon</span></code> 或 <code class="docutils literal notranslate"><span class="pre">powershell</span></code> 代替 <code class="docutils literal notranslate"><span class="pre">console</span></code>，并省略 <code class="docutils literal notranslate"><span class="pre">$</span></code> 前缀。</p>
+<p>Python 解释器的例子：</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span>Label the example::
 
 <span class="p">..</span> <span class="ow">code-block</span><span class="p">::</span> python
@@ -171,7 +155,7 @@ from this project, due to complete and total lack of taste.</p>
     &gt;&gt;&gt; import this
 </pre></div>
 </div>
-<p>Python examples:</p>
+<p>Python 例子：</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span>Descriptive title::
 
 <span class="p">..</span> <span class="ow">code-block</span><span class="p">::</span> <span class="k">python</span>
@@ -182,31 +166,28 @@ from this project, due to complete and total lack of taste.</p>
 </div>
 </div>
 <div class="section" id="externally-linking">
-<h2>Externally Linking<a class="headerlink" href="#externally-linking" title="永久链接至标题">¶</a></h2>
+<h2>外部链接<a class="headerlink" href="#externally-linking" title="永久链接至标题">¶</a></h2>
 <ul>
-<li><p class="first">Prefer labels for well known subjects (e.g. proper nouns) when linking:</p>
+<li><p class="first">链接，倾向于为众所周知的主题（如专有名词）贴上标签：</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span>Sphinx_ is used to document Python.
 
 <span class="p">..</span> <span class="nt">_Sphinx:</span> https://www.sphinx-doc.org
 </pre></div>
 </div>
 </li>
-<li><p class="first">Prefer to use descriptive labels with inline links instead of leaving bare
-links:</p>
+<li><p class="first">倾向于使用带有内联的描述性标签，而不是留下裸露的链接：</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span>Read the <span class="s">`Sphinx Tutorial </span><span class="si">&lt;https://www.sphinx-doc.org/en/master/usage/quickstart.html&gt;</span><span class="s">`_</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Avoid using labels such as “click here”, “this”, etc., preferring
-descriptive labels (SEO worthy) instead.</p>
+<li><p class="first">避免使用诸如 “点击这里”、”这个” 等标签，而是选择描述性标签（具有 SEO 价值）。</p>
 </li>
 </ul>
 </div>
 <div class="section" id="linking-to-sections-in-the-guide">
-<h2>Linking to Sections in The Guide<a class="headerlink" href="#linking-to-sections-in-the-guide" title="永久链接至标题">¶</a></h2>
-<p>To cross-reference other parts of this documentation, use the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-ref">:ref:</a>
-keyword and labels.</p>
-<p>To make reference labels more clear and unique, always add a <code class="docutils literal notranslate"><span class="pre">-ref</span></code> suffix:</p>
+<h2>链接到《指南》中的各章节<a class="headerlink" href="#linking-to-sections-in-the-guide" title="永久链接至标题">¶</a></h2>
+<p>要交叉引用本文档的其他部分，请使用 <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-ref">:ref:</a> 关键字和标签。</p>
+<p>为了使参考标签更加清晰和独特，总是添加一个 <code class="docutils literal notranslate"><span class="pre">-ref</span></code> 后缀：</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="nt">_some-section-ref:</span>
 
 <span class="gh">Some Section</span>
@@ -215,25 +196,23 @@ keyword and labels.</p>
 </div>
 </div>
 <div class="section" id="notes-and-warnings">
-<h2>Notes and Warnings<a class="headerlink" href="#notes-and-warnings" title="永久链接至标题">¶</a></h2>
-<p>Make use of the appropriate <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#directives">admonitions directives</a> when making notes.</p>
-<p>Notes:</p>
+<h2>注意和警告<a class="headerlink" href="#notes-and-warnings" title="永久链接至标题">¶</a></h2>
+<p>在做笔记时要使用适当的 <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#directives">admonitions 指令</a>。</p>
+<p>注意</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">note</span><span class="p">::</span>
     The Hitchhiker’s Guide to the Galaxy has a few things to say
     on the subject of towels. A towel, it says, is about the most
     massively useful thing an interstellar hitch hiker can have.
 </pre></div>
 </div>
-<p>Warnings:</p>
+<p>警告：</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">warning</span><span class="p">::</span> DON&#39;T PANIC
 </pre></div>
 </div>
 </div>
 <div class="section" id="todos">
-<h2>TODOs<a class="headerlink" href="#todos" title="永久链接至标题">¶</a></h2>
-<p>Please mark any incomplete areas of The Guide with a <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/todo.html">todo directive</a>. To
-avoid cluttering the <a class="reference internal" href="contribute.html#todo-list-ref"><span class="std std-ref">Todo List</span></a>, use a single <code class="docutils literal notranslate"><span class="pre">todo</span></code> for stub
-documents or large incomplete sections.</p>
+<h2>要做的事<a class="headerlink" href="#todos" title="永久链接至标题">¶</a></h2>
+<p>请用 <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/todo.html">todo 指令</a> 标记《指南》中任何不完整的地方。为了避免弄乱 <a class="reference internal" href="contribute.html#todo-list-ref"><span class="std std-ref">待办清单</span></a>，对存根文件或大的不完整部分使用单个 <code class="docutils literal notranslate"><span class="pre">todo</span></code>。</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">todo</span><span class="p">::</span>
     Learn the Ultimate Answer to the Ultimate Question
     of Life, The Universe, and Everything
@@ -307,15 +286,15 @@ documents or large incomplete sections.</p>
 </ul>
   <h3><a href="../index.html">內容目录</a></h3>
   <ul>
-<li><a class="reference internal" href="#">The Guide Style Guide</a><ul>
-<li><a class="reference internal" href="#relevancy">Relevancy</a></li>
-<li><a class="reference internal" href="#headings">Headings</a></li>
-<li><a class="reference internal" href="#prose">Prose</a></li>
-<li><a class="reference internal" href="#code-examples">Code Examples</a></li>
-<li><a class="reference internal" href="#externally-linking">Externally Linking</a></li>
-<li><a class="reference internal" href="#linking-to-sections-in-the-guide">Linking to Sections in The Guide</a></li>
-<li><a class="reference internal" href="#notes-and-warnings">Notes and Warnings</a></li>
-<li><a class="reference internal" href="#todos">TODOs</a></li>
+<li><a class="reference internal" href="#">风格指南指引</a><ul>
+<li><a class="reference internal" href="#relevancy">相关性</a></li>
+<li><a class="reference internal" href="#headings">标题</a></li>
+<li><a class="reference internal" href="#prose">换行</a></li>
+<li><a class="reference internal" href="#code-examples">代码例子</a></li>
+<li><a class="reference internal" href="#externally-linking">外部链接</a></li>
+<li><a class="reference internal" href="#linking-to-sections-in-the-guide">链接到《指南》中的各章节</a></li>
+<li><a class="reference internal" href="#notes-and-warnings">注意和警告</a></li>
+<li><a class="reference internal" href="#todos">要做的事</a></li>
 </ul>
 </li>
 </ul>
@@ -323,7 +302,7 @@ documents or large incomplete sections.</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="license.html" title="上一章">License</a></li>
+      <li>Previous: <a href="license.html" title="上一章">许可证</a></li>
   </ul></li>
 </ul>
 </div>
